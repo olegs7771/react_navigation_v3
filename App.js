@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
+
+//Redux
+import { Provider } from "react-redux";
+import configureStore from "./store";
+const store = configureStore();
+
 //Screens
 import SignInScreen from "./app/screens/SignInScreen";
 import AuthLoadingScreen from "./app/screens/AuthLoadingScreen";
@@ -15,25 +21,17 @@ import {
 } from "react-navigation";
 
 //Modal/Detail Navigation
-const ModalStack = createStackNavigator(
-  {
-    Modal: { screen: ModalScreen },
-    Detail: { screen: DetailScreen }
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        headerTitle: navigation.state.routeName
-      };
-    }
-  }
-);
+const ModalBattomStack = createBottomTabNavigator({
+  Modal: { screen: ModalScreen },
+  Detail: { screen: DetailScreen }
+});
+
 //App Stack Navigation
 const AppRootStack = createStackNavigator(
   {
     DashBoard: DashboardScreen,
     Other: OtherScreen,
-    Modal: ModalStack
+    Modal: ModalBattomStack
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -60,7 +58,11 @@ const AppContainer = createAppContainer(
 );
 class App extends Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    );
   }
 }
 
