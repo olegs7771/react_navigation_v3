@@ -1,41 +1,38 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import {
-  createStackNavigator,
-  createSwitchNavigator,
-  createAppContainer
-} from "react-navigation";
+//Screens
 import SignInScreen from "./app/screens/SignInScreen";
 import AuthLoadingScreen from "./app/screens/AuthLoadingScreen";
 import DashboardScreen from "./app/screens/DashboardScreen";
 import OtherScreen from "./app/screens/OtherScreen";
+import ModalScreen from "./app/screens/ModalScreen";
+import DetailScreen from "./app/screens/DetailScreen";
+import {
+  createStackNavigator,
+  createSwitchNavigator,
+  createBottomTabNavigator,
+  createAppContainer
+} from "react-navigation";
 
-class App extends Component {
-  render() {
-    return <AppContainer />;
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
+//Modal/Detail Navigation
+const ModalStack = createStackNavigator({
+  Modal: { screen: ModalScreen },
+  Detail: { screen: DetailScreen }
 });
-export default App;
-
-const AppStack = createStackNavigator({
+//App Stack Navigation
+const AppRootStack = createStackNavigator({
   DashBoard: DashboardScreen,
-  Other: OtherScreen
+  Other: OtherScreen,
+  Modal: ModalScreen
 });
+//Auth Stack Navigation
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
-
+//Container Navigation
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: { screen: AppStack },
+      App: { screen: AppRootStack },
       Auth: { screen: AuthStack }
     },
     {
@@ -43,3 +40,10 @@ const AppContainer = createAppContainer(
     }
   )
 );
+class App extends Component {
+  render() {
+    return <AppContainer />;
+  }
+}
+
+export default App;
