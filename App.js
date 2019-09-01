@@ -15,16 +15,34 @@ import {
 } from "react-navigation";
 
 //Modal/Detail Navigation
-const ModalStack = createStackNavigator({
-  Modal: { screen: ModalScreen },
-  Detail: { screen: DetailScreen }
-});
+const ModalStack = createStackNavigator(
+  {
+    Modal: { screen: ModalScreen },
+    Detail: { screen: DetailScreen }
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: navigation.state.routeName
+      };
+    }
+  }
+);
 //App Stack Navigation
-const AppRootStack = createStackNavigator({
-  DashBoard: DashboardScreen,
-  Other: OtherScreen,
-  Modal: ModalScreen
-});
+const AppRootStack = createStackNavigator(
+  {
+    DashBoard: DashboardScreen,
+    Other: OtherScreen,
+    Modal: ModalStack
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerTitle: navigation.state.routeName
+      };
+    }
+  }
+);
 //Auth Stack Navigation
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 //Container Navigation

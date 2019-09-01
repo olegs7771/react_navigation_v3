@@ -1,32 +1,17 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import ModalScreen from "./ModalScreen";
+import { Text, StyleSheet, View, TouchableOpacity, Button } from "react-native";
+
 export default class OtherScreen extends Component {
-  state = {
-    visible: false
+  _showModel = () => {
+    this.props.navigation.navigate("Modal");
   };
-
-  _openModal = () => {
-    this.setState({
-      visible: true
-    });
-  };
-  _modalClose = () => {
-    this.setState({
-      visible: false
-    });
-  };
-
   render() {
     return (
       <View style={styles.container}>
-        <ModalScreen modal={this.state.visible} modalClose={this._modalClose} />
         <Text> Other Screen </Text>
         <Text> Here We gonna have Modal pop up </Text>
         <View>
-          <TouchableOpacity onPress={this._openModal}>
-            <Text>Open Modal</Text>
-          </TouchableOpacity>
+          <Button title="Model" onPress={this._showModel} />
         </View>
       </View>
     );
