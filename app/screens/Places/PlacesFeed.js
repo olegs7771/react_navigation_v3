@@ -11,7 +11,9 @@ export class PlacesFeed extends Component {
     return (
       <FlatList
         data={this.props.places}
-        renderItem={({ item }) => <PlaceItem key={item.key} name={item.name} />}
+        renderItem={({ item }) => (
+          <PlaceItem key={item.key} name={item.name} image={item.image} />
+        )}
       />
     );
   }

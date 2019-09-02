@@ -37,7 +37,9 @@ export class Places extends Component {
           />
           <Button title="Add Place" onPress={this._addPlace} />
         </View>
-        <PlacesFeed />
+        <View style={styles.containerFeed}>
+          <PlacesFeed />
+        </View>
       </View>
     );
   }
@@ -71,5 +73,10 @@ const styles = StyleSheet.create({
     width: "60%",
     marginLeft: "20%",
     paddingTop: 10
+  },
+  containerFeed: {
+    flex: 4,
+    flexDirection: "row",
+    justifyContent: "flex-start"
   }
 });
