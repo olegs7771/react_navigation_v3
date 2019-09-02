@@ -7,19 +7,13 @@ import { connect } from "react-redux";
 export class PlacesFeed extends Component {
   render() {
     console.log("this.props", this.props.places);
-    let feedContent;
-    if (this.props.places) {
-      feedContent = (
-        <FlatList
-          data={this.props.places}
-          renderItem={({ item }) => (
-            <PlaceItem key={item.key} place={item.place} />
-          )}
-        />
-      );
-    }
 
-    return <View style={styles.container}>{feedContent}</View>;
+    return (
+      <FlatList
+        data={this.props.places}
+        renderItem={({ item }) => <PlaceItem key={item.key} name={item.name} />}
+      />
+    );
   }
 }
 

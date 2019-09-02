@@ -15,7 +15,7 @@ export class Places extends Component {
     }
 
     const newPlace = {
-      key: Math.random(),
+      key: JSON.stringify(Math.random()),
       name: this.state.placeName,
       image: {
         uri:
