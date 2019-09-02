@@ -25,6 +25,12 @@ export default class DashboardScreen extends Component {
           >
             <Text style={styles.text}> Other Screen</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate("Places")}
+          >
+            <Text style={styles.text}> Places</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this._signOut}>
             <Text style={styles.text}> SignOut</Text>
           </TouchableOpacity>

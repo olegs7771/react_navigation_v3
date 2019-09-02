@@ -1,1 +1,1 @@
-export const SHOW_DETAIL = "SHOW_DETAIL";
+export const ADD_PLACE = "ADD_PLACE";

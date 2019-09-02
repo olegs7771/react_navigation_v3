@@ -13,6 +13,7 @@ import DashboardScreen from "./app/screens/DashboardScreen";
 import OtherScreen from "./app/screens/OtherScreen";
 import ModalScreen from "./app/screens/ModalScreen";
 import DetailScreen from "./app/screens/DetailScreen";
+import PlacesScreen from "./app/screens/Places/PlacesScreen";
 import {
   createStackNavigator,
   createSwitchNavigator,
@@ -31,12 +32,20 @@ const AppRootStack = createStackNavigator(
   {
     DashBoard: DashboardScreen,
     Other: OtherScreen,
-    Modal: ModalBattomStack
+    Modal: ModalBattomStack,
+    Places: PlacesScreen
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        headerTitle: navigation.state.routeName
+        headerTitle: navigation.state.routeName,
+        headerStyle: {
+          backgroundColor: "#719bf0"
+        },
+        headerTitleStyle: {
+          marginLeft: "33%"
+        },
+        headerTintColor: "#fcfcfc"
       };
     }
   }
