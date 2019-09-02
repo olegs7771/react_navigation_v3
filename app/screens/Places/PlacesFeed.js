@@ -9,12 +9,14 @@ export class PlacesFeed extends Component {
     console.log("this.props", this.props.places);
 
     return (
-      <FlatList
-        data={this.props.places}
-        renderItem={({ item }) => (
-          <PlaceItem key={item.key} name={item.name} image={item.image} />
-        )}
-      />
+      <View style={styles.container}>
+        <FlatList
+          data={this.props.places}
+          renderItem={({ item }) => (
+            <PlaceItem key={item.key} name={item.name} image={item.image} />
+          )}
+        />
+      </View>
     );
   }
 }
@@ -31,5 +33,8 @@ export default connect(
 )(PlacesFeed);
 
 styles = StyleSheet.create({
-  container: 1
+  container: {
+    flex: 1,
+    flexDirection: "row"
+  }
 });

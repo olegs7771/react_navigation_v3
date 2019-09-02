@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   },
   containerFeed: {
     flex: 4,
-    flexDirection: "row",
-    justifyContent: "flex-start"
+    flexDirection: "row"
   }
 });
