@@ -1,4 +1,4 @@
-import { ADD_PLACE, SELECT_PLACE, DELETE_PLACE } from "./types";
+import { ADD_PLACE, SELECT_PLACE, DELETE_PLACE, CLOSE_PLACE } from "./types";
 export const addPlace = place => {
   return {
     type: ADD_PLACE,
@@ -13,10 +13,13 @@ export const deletePlace = key => {
   };
 };
 export const selectPlaceID = id => {
-  console.log("id", id);
-
   return {
     type: SELECT_PLACE,
     payload: id
+  };
+};
+export const closePlace = () => {
+  return {
+    type: CLOSE_PLACE
   };
 };
