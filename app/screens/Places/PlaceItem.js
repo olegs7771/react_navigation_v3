@@ -2,9 +2,16 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 const PlaceItem = props => {
+  _onPressSelectID = () => {
+    console.log("KEY :", props);
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.containerTouchable}>
+      <TouchableOpacity
+        style={styles.containerTouchable}
+        onPress={this._onPressSelectID}
+      >
         <Image />
         <Text style={styles.text}>{props.name}</Text>
         <Image source={props.image} style={{ width: "100%", height: 200 }} />

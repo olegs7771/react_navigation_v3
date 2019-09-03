@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import InputForm from "../../components/InputForm";
 import PlacesFeed from "./PlacesFeed";
+import PlacesModal from "./PlacesModal";
 import { addPlace } from "../../../action/modalAction";
 import { connect } from "react-redux";
+import uuid from "uuid/v1";
 
 export class Places extends Component {
   state = {
@@ -15,6 +17,7 @@ export class Places extends Component {
     }
 
     const newPlace = {
+      id: uuid(),
       key: JSON.stringify(Math.random()),
       name: this.state.placeName,
       image: {
@@ -28,6 +31,7 @@ export class Places extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {/* <PlacesModal /> */}
         <Text style={styles.textTitle}>Choose Place</Text>
 
         <View style={styles.containerInput}>

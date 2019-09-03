@@ -13,7 +13,12 @@ export class PlacesFeed extends Component {
         <FlatList
           data={this.props.places}
           renderItem={({ item }) => (
-            <PlaceItem key={item.key} name={item.name} image={item.image} />
+            <PlaceItem
+              key={item.key}
+              name={item.name}
+              image={item.image}
+              id={item.id}
+            />
           )}
         />
       </View>
