@@ -12,9 +12,11 @@ export const deletePlace = key => {
     payload: key
   };
 };
-export const selectPlaceID = key => {
+export const selectPlaceID = id => {
+  console.log("id", id);
+
   return {
     type: SELECT_PLACE,
-    payload: key
+    payload: id
   };
 };

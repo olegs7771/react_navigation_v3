@@ -1,9 +1,13 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { connect } from "react-redux";
+import { selectPlaceID } from "../../../action/modalAction";
 
 const PlaceItem = props => {
   _onPressSelectID = () => {
-    console.log("KEY :", props);
+    console.log("props", props);
+
+    props.selectPlaceID(props.id);
   };
 
   return (
@@ -12,23 +16,20 @@ const PlaceItem = props => {
         style={styles.containerTouchable}
         onPress={this._onPressSelectID}
       >
-        <Image />
         <Text style={styles.text}>{props.name}</Text>
         <Image source={props.image} style={{ width: "100%", height: 200 }} />
         <View>
-          <Text>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde ea
-            mollitia enim, similique sapiente voluptatem repellat provident. Eos
-            nam quod ad at id perspiciatis non nisi doloribus, accusantium aut
-            nulla!
-          </Text>
+          <Text style={styles.textArticle}>{props.text}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default PlaceItem;
+export default connect(
+  null,
+  { selectPlaceID }
+)(PlaceItem);
 
 const styles = StyleSheet.create({
   container: {
@@ -50,5 +51,8 @@ const styles = StyleSheet.create({
   containerTouchable: {
     padding: 10,
     backgroundColor: "#ffffff"
+  },
+  textArticle: {
+    padding: 10
   }
 });

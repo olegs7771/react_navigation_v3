@@ -17,6 +17,7 @@ export class PlacesFeed extends Component {
               key={item.key}
               name={item.name}
               image={item.image}
+              text={item.text}
               id={item.id}
             />
           )}

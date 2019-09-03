@@ -23,7 +23,9 @@ export class Places extends Component {
       image: {
         uri:
           "https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search/jcr_content/main-pars/image/visual-reverse-image-search-v2_intro.jpg"
-      }
+      },
+      text:
+        "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. "
     };
     this.props.addPlace(newPlace);
     console.log(newPlace);
@@ -31,7 +33,7 @@ export class Places extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <PlacesModal /> */}
+        <PlacesModal selectedPlace={this.props.selectedPlace} />
         <Text style={styles.textTitle}>Choose Place</Text>
 
         <View style={styles.containerInput}>
@@ -49,7 +51,9 @@ export class Places extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  selectedPlace: state.modal.selectedPlace
+});
 
 const mapDispatchToProps = { addPlace };
 
