@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import InputForm from "../../components/InputForm";
+import TextTitle from "../../components/TextTitle";
 import PlacesFeed from "./PlacesFeed";
 import PlacesModal from "./PlacesModal";
 import { addPlace } from "../../../action/modalAction";
@@ -34,7 +35,7 @@ export class Places extends Component {
     return (
       <View style={styles.container}>
         <PlacesModal selectedPlace={this.props.selectedPlace} />
-        <Text style={styles.textTitle}>Choose Place</Text>
+        <TextTitle style={styles.textTitle}>Choose Place</TextTitle>
 
         <View style={styles.containerInput}>
           <InputForm
@@ -68,14 +69,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignContent: "center",
     paddingVertical: 20,
-    backgroundColor: "#b8e2f2"
+    backgroundColor: "#b8e2f2",
+    paddingTop: 50
   },
-  textTitle: {
-    fontSize: 20,
-    textAlign: "center",
-    color: "#fcfcfc",
-    fontWeight: "bold"
-  },
+
   containerInput: {
     flex: 1,
     width: "60%",

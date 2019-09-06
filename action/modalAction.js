@@ -6,10 +6,9 @@ export const addPlace = place => {
   };
 };
 
-export const deletePlace = key => {
+export const deletePlace = () => {
   return {
-    type: DELETE_PLACE,
-    payload: key
+    type: DELETE_PLACE
   };
 };
 export const selectPlaceID = id => {

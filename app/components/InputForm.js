@@ -3,14 +3,9 @@ import { Text, StyleSheet, View, TextInput } from "react-native";
 
 export default class InputForm extends Component {
   render() {
-    const { placeholder, onChangeText } = this.props;
     return (
       <View style={styles.container}>
-        <TextInput
-          style={styles.textInput}
-          placeholder={placeholder}
-          onChangeText={onChangeText}
-        />
+        <TextInput {...this.props} style={styles.textInput} />
       </View>
     );
   }
@@ -20,7 +15,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
     paddingTop: 10,
-    width: "100%",
+
     marginBottom: 10
   },
   textInput: {
@@ -28,6 +23,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: "#838ceb"
+    borderColor: "#838ceb",
+    width: "100%"
   }
 });

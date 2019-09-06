@@ -1,31 +1,73 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, Button, AsyncStorage } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Button,
+  AsyncStorage,
+  ImageBackground
+} from "react-native";
+import InputForm from "../components/InputForm";
 
 class SignInScreen extends Component {
+  static navigationOptions = {
+    header: null
+  };
+
+  state = {
+    email: ""
+  };
   _signIn = async () => {
     await AsyncStorage.setItem("authToken", "abc");
     console.log("signed");
 
     this.props.navigation.navigate("App");
+
+    console.log(this.state.email);
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text> SignIn </Text>
-        <Button title="SignIn" onPress={this._signIn} />
-      </View>
+      <ImageBackground
+        source={{
+          uri:
+            "https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        }}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <View style={styles.container}>
+          <Text style={styles.textTitle}> SignIn </Text>
+          <View style={styles.containerForms}>
+            <InputForm
+              placeholder="Email"
+              onChangeText={text => this.setState({ email: text })}
+            />
+            <InputForm placeholder="Password" />
+            <InputForm placeholder="Confirm Password" />
+            <Button title="SignIn" onPress={this._signIn} />
+          </View>
+        </View>
+      </ImageBackground>
     );
   }
 }
+export default SignInScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "green"
+    paddingTop: 35
+  },
+  containerForms: {
+    flex: 1,
+    width: "80%"
+  },
+  textTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ffffff",
+    marginTop: 40
   }
 });
-
-export default SignInScreen;

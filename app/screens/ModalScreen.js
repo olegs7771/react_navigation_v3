@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
     flex: 1,
+    paddingTop: 35,
 
     alignItems: "center"
   },

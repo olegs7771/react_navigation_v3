@@ -5,8 +5,11 @@ import {
   View,
   Button,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
+import TextTitle from "../components/TextTitle";
+import CustomStyleText from "../components/CustomStyleText";
 
 export default class DashboardScreen extends Component {
   _signOut = async () => {
@@ -17,7 +20,9 @@ export default class DashboardScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> Dashboard </Text>
+        <CustomStyleText>
+          <TextTitle style={styles.textTitle}> Dashboard </TextTitle>
+        </CustomStyleText>
         <View style={styles.containerButton}>
           <TouchableOpacity
             style={styles.button}
@@ -31,6 +36,7 @@ export default class DashboardScreen extends Component {
           >
             <Text style={styles.text}> Places</Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.button} onPress={this._signOut}>
             <Text style={styles.text}> SignOut</Text>
           </TouchableOpacity>
@@ -56,9 +62,11 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     flexDirection: "row",
-    width: "50%",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     paddingTop: 40
+  },
+  textTitle: {
+    color: "#8e98e6"
   }
 });

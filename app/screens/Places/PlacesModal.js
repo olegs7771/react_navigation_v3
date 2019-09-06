@@ -1,13 +1,18 @@
 import React from "react";
 import { View, Text, Modal, StyleSheet, Button, Image } from "react-native";
 import { connect } from "react-redux";
-import { closePlace } from "../../../action/modalAction";
+import { closePlace, deletePlace } from "../../../action/modalAction";
 
 const PlacesModal = props => {
   _closePlace = () => {
     console.log("closed");
 
     props.closePlace();
+  };
+
+  _deletePlace = () => {
+    console.log("deleted");
+    props.deletePlace();
   };
   let modalContent;
   if (props.selectedPlace) {
@@ -16,10 +21,10 @@ const PlacesModal = props => {
       <View style={styles.container}>
         <Text style={styles.textTitle}>{name}</Text>
         <Image source={image} style={styles.image} />
-        <Text>{text}</Text>
+        <Text style={styles.textArticle}>{text}</Text>
         <View style={styles.containerButtons}>
           <Button title="Close" color="grey" onPress={this._closePlace} />
-          <Button title="Delete" color="red" />
+          <Button title="Delete" color="red" onPress={this._deletePlace} />
         </View>
       </View>
     );
@@ -34,7 +39,7 @@ const PlacesModal = props => {
 
 export default connect(
   null,
-  { closePlace }
+  { closePlace, deletePlace }
 )(PlacesModal);
 
 const styles = StyleSheet.create({
@@ -44,10 +49,8 @@ const styles = StyleSheet.create({
   },
   containerButtons: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: "20%",
+    justifyContent: "center",
 
-    width: "40%",
     paddingTop: 20
   },
   textTitle: {
@@ -59,5 +62,8 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 200
+  },
+  textArticle: {
+    padding: 10
   }
 });

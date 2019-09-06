@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text } from "react-native";
+import Icon from "@expo/vector-icons/Ionicons";
 
 //Redux
 import { Provider } from "react-redux";
@@ -14,12 +15,27 @@ import OtherScreen from "./app/screens/OtherScreen";
 import ModalScreen from "./app/screens/ModalScreen";
 import DetailScreen from "./app/screens/DetailScreen";
 import PlacesScreen from "./app/screens/Places/PlacesScreen";
+//Menu Draw Navigation
+
+import FirstItem from "./app/screens/DrawMenu/FirstItem";
+import SecondItem from "./app/screens/DrawMenu/SecondItem";
+import ThirdItem from "./app/screens/DrawMenu/ThirdItem";
 import {
   createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator,
+  createDrawerNavigator,
   createAppContainer
 } from "react-navigation";
+
+//Draw Navigation
+
+const DrawMenu = createDrawerNavigator({
+  Menu: { screen: DashboardScreen },
+  Item1: { screen: FirstItem },
+  Item2: { screen: SecondItem },
+  Item3: { screen: ThirdItem }
+});
 
 //Modal/Detail Navigation
 const ModalBattomStack = createBottomTabNavigator({
@@ -28,17 +44,23 @@ const ModalBattomStack = createBottomTabNavigator({
 });
 
 //App Stack Navigation
-const AppRootStack = createStackNavigator(
+const AppDrawStack = createStackNavigator(
   {
-    DashBoard: DashboardScreen,
-    Other: OtherScreen,
-    Modal: ModalBattomStack,
-    Places: PlacesScreen
+    DashBoard: DrawMenu
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
         headerTitle: navigation.state.routeName,
+        headerLeft: (
+          <Icon
+            name="md-menu"
+            size={32}
+            color="white"
+            style={{ paddingLeft: 15 }}
+            onPress={() => navigation.toggleDrawer()}
+          />
+        ),
         headerStyle: {
           backgroundColor: "#719bf0"
         },
@@ -46,6 +68,22 @@ const AppRootStack = createStackNavigator(
           marginLeft: "33%"
         },
         headerTintColor: "#fcfcfc"
+      };
+    }
+  }
+);
+
+const AppRootStack = createStackNavigator(
+  {
+    DashBoard: AppDrawStack,
+    Other: OtherScreen,
+    Modal: ModalBattomStack,
+    Places: PlacesScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        header: null
       };
     }
   }

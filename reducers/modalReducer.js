@@ -1,4 +1,9 @@
-import { ADD_PLACE, SELECT_PLACE, CLOSE_PLACE } from "../action/types";
+import {
+  ADD_PLACE,
+  SELECT_PLACE,
+  CLOSE_PLACE,
+  DELETE_PLACE
+} from "../action/types";
 const initialState = {
   places: [],
   selectedPlace: null
@@ -20,6 +25,14 @@ export default function(state = initialState, action) {
     case CLOSE_PLACE:
       return {
         ...state,
+        selectedPlace: null
+      };
+    case DELETE_PLACE:
+      return {
+        ...state,
+        places: state.places.filter(place => {
+          return place.id !== state.selectedPlace.id;
+        }),
         selectedPlace: null
       };
     default:

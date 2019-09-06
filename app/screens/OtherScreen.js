@@ -9,7 +9,7 @@ export default class OtherScreen extends Component {
     return (
       <View style={styles.container}>
         <Text> Other Screen </Text>
-        <Text> Here We gonna have Modal pop up </Text>
+        <Text> Here We gonna have Modal-Like page </Text>
         <View>
           <Button title="Model" onPress={this._showModel} />
         </View>
@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-start",
-    alignItems: "center"
+    alignItems: "center",
+    paddingTop: 35
   },
 
   modalButton: {}
