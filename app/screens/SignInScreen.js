@@ -8,6 +8,7 @@ import {
   ImageBackground
 } from "react-native";
 import InputForm from "../components/InputForm";
+import ButtonBackGround from "../components/ButtonBackGround";
 
 class SignInScreen extends Component {
   static navigationOptions = {
@@ -44,7 +45,9 @@ class SignInScreen extends Component {
             />
             <InputForm placeholder="Password" />
             <InputForm placeholder="Confirm Password" />
-            <Button title="SignIn" onPress={this._signIn} />
+            <ButtonBackGround onPress={this._signIn} color="#415956">
+              SignIn
+            </ButtonBackGround>
           </View>
         </View>
       </ImageBackground>

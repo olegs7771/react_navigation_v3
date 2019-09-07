@@ -15,6 +15,7 @@ import OtherScreen from "./app/screens/OtherScreen";
 import ModalScreen from "./app/screens/ModalScreen";
 import DetailScreen from "./app/screens/DetailScreen";
 import PlacesScreen from "./app/screens/Places/PlacesScreen";
+import SharePlaceScreen from "./app/screens/SharePlace/SharePlaceScreen";
 //Menu Draw Navigation
 
 import FirstItem from "./app/screens/DrawMenu/FirstItem";
@@ -42,6 +43,32 @@ const ModalBattomStack = createBottomTabNavigator({
   Modal: { screen: ModalScreen },
   Detail: { screen: DetailScreen }
 });
+
+//Places/Shareplaces Navigation
+const PlacesBottomTab = createBottomTabNavigator(
+  {
+    Place: {
+      screen: PlacesScreen
+    },
+    Share: {
+      screen: SharePlaceScreen
+    }
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        if (routeName === "Share") {
+          iconName = "md-share-alt";
+        } else if (routeName === "Place") {
+          iconName = "md-clipboard";
+        }
+        return <Icon name={iconName} size={25} color={tintColor} />;
+      }
+    })
+  }
+);
 
 //App Stack Navigation
 const AppDrawStack = createStackNavigator(
@@ -78,7 +105,7 @@ const AppRootStack = createStackNavigator(
     DashBoard: AppDrawStack,
     Other: OtherScreen,
     Modal: ModalBattomStack,
-    Places: PlacesScreen
+    Places: PlacesBottomTab
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
