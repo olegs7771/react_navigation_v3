@@ -26,10 +26,10 @@ export class SharePlaceScreen extends Component {
           <View style={styles.containerStyle}>
             <Text style={styles.textTitle}>{place.name}</Text>
           </View>
-          <View>
+          <View style={styles.containerImage}>
             <Image
               source={place.image}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "80%", height: "80%" }}
             />
           </View>
           <View style={styles.containerTextArticle}>
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignSelf: "center",
     borderColor: "black",
-    height: 200,
-    marginBottom: 100
+
+    marginBottom: 10
   },
   text: {
     color: "#ffffff"
