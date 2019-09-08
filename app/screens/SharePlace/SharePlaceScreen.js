@@ -12,33 +12,37 @@ import InputForm from "../../components/InputForm";
 import ButtonBackGround from "../../components/ButtonBackGround";
 import { connect } from "react-redux";
 
-const placeholderImage = {
+const backgroundImg = {
   uri:
-    "https://accuweather.brightspotcdn.com/dims4/default/cc442cf/2147483647/resize/590x/quality/90/?url=http%3A%2F%2Faccuweather-bsp.s3.amazonaws.com%2F35%2F36%2Fbbe409654bbabc17a8592826dacf%2Fforest.jpg"
+    "https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
 };
 
 export class SharePlaceScreen extends Component {
   render() {
+    let ImageContent;
+    this.props.places.map(place => {
+      ImageContent = (
+        <View style={styles.placeholder}>
+          <Text style={styles.textTitle}>{place.name}</Text>
+          <Image
+            source={place.image}
+            style={{ width: "100%", height: "100%" }}
+          />
+          <Text style={styles.text}>{place.text}</Text>
+        </View>
+      );
+    });
     return (
       <ImageBackground
-        source={{
-          uri:
-            "https://images.pexels.com/photos/953214/pexels-photo-953214.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-        }}
+        source={backgroundImg}
         style={{ width: "100%", height: "100%" }}
       >
         <ScrollView>
           <View style={styles.container}>
             <Text style={styles.textTitle}> Share Place With Us! </Text>
-            <View style={styles.placeholder}>
-              <Image
-                source={placeholderImage}
-                style={{ width: "100%", height: "100%" }}
-              />
-            </View>
-            <ButtonBackGround color="#4f7e9e" width="80%" marginBottom={30}>
-              Pick Image
-            </ButtonBackGround>
+
+            {ImageContent}
+
             <View style={styles.placeholder}>
               <Text>Map</Text>
             </View>
@@ -57,7 +61,9 @@ export class SharePlaceScreen extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  places: state.modal.places
+});
 
 const mapDispatchToProps = {};
 
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
   textTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginVertical: 30,
+    marginVertical: 10,
     textAlign: "center",
     color: "#ffffff"
   },
@@ -85,6 +91,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderColor: "black",
     backgroundColor: "#eee",
-    height: 250
+    height: 250,
+    marginBottom: 100
+  },
+  text: {
+    color: "#ffffff"
   }
 });
