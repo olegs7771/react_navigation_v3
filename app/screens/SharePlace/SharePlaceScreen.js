@@ -23,18 +23,12 @@ export class SharePlaceScreen extends Component {
     this.props.places.map(place => {
       ImageContent = (
         <View style={styles.placeholder}>
-          <View style={styles.containerStyle}>
-            <Text style={styles.textTitle}>{place.name}</Text>
-          </View>
-          <View style={styles.containerImage}>
-            <Image
-              source={place.image}
-              style={{ width: "80%", height: "80%" }}
-            />
-          </View>
-          <View style={styles.containerTextArticle}>
-            <Text style={styles.text}>{place.text}</Text>
-          </View>
+          <Text style={styles.textTitle}>{place.name}</Text>
+          <Image
+            source={place.image}
+            style={{ width: "100%", height: "100%" }}
+          />
+          <Text style={styles.text}>{place.text}</Text>
         </View>
       );
     });
@@ -46,6 +40,7 @@ export class SharePlaceScreen extends Component {
         <ScrollView>
           <View style={styles.container}>
             <Text style={styles.textTitle}> Share Place With Us! </Text>
+
             {ImageContent}
 
             <View style={styles.placeholder}>
@@ -81,13 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingVertical: 35,
-    alignContent: "center",
-    justifyContent: "space-evenly"
+    alignContent: "center"
   },
   textTitle: {
     fontSize: 20,
     fontWeight: "bold",
-
+    marginVertical: 10,
     textAlign: "center",
     color: "#ffffff"
   },
@@ -96,16 +90,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignSelf: "center",
     borderColor: "black",
-
-    marginBottom: 10
+    backgroundColor: "#eee",
+    height: 250,
+    marginBottom: 100
   },
   text: {
     color: "#ffffff"
-  },
-  containerTextArticle: {
-    marginVertical: 10
-  },
-  containerStyle: {
-    backgroundColor: "#1a4754"
   }
 });
