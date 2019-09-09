@@ -44,6 +44,7 @@ export class SharePlaceScreen extends Component {
 
     console.log("placeToShare", placeToShare);
     this.props.sharePlace(placeToShare);
+    this.props.navigation.navigate("SharedPlaces");
   };
 
   render() {
