@@ -6,7 +6,8 @@ import {
 } from "../action/types";
 const initialState = {
   places: [],
-  selectedPlace: null
+  selectedPlace: null,
+  sharedPlaces: []
 };
 export default function(state = initialState, action) {
   switch (action.type) {

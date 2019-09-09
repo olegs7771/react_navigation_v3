@@ -6,8 +6,6 @@ import { connect } from "react-redux";
 
 export class PlacesFeed extends Component {
   render() {
-    console.log("this.props", this.props.places);
-
     return (
       <View style={styles.container}>
         <FlatList

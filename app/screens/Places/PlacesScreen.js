@@ -29,7 +29,6 @@ export class Places extends Component {
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing elit. "
     };
     this.props.addPlace(newPlace);
-    console.log(newPlace);
   };
   render() {
     return (
