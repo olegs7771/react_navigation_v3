@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import InputForm from "../../components/InputForm";
 import ButtonBackGround from "../../components/ButtonBackGround";
+import { sharePlace } from "../../../action/modalAction";
 import { connect } from "react-redux";
 
 const backgroundImg = {
@@ -40,7 +41,9 @@ export class SharePlaceScreen extends Component {
       image,
       text
     };
+
     console.log("placeToShare", placeToShare);
+    this.props.sharePlace(placeToShare);
   };
 
   render() {
@@ -97,7 +100,7 @@ const mapStateToProps = state => ({
   places: state.modal.places
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { sharePlace };
 
 export default connect(
   mapStateToProps,

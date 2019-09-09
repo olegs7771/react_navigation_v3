@@ -1,4 +1,10 @@
-import { ADD_PLACE, SELECT_PLACE, DELETE_PLACE, CLOSE_PLACE } from "./types";
+import {
+  ADD_PLACE,
+  SELECT_PLACE,
+  DELETE_PLACE,
+  CLOSE_PLACE,
+  SHARE_PLACE
+} from "./types";
 export const addPlace = place => {
   return {
     type: ADD_PLACE,
@@ -20,5 +26,11 @@ export const selectPlaceID = id => {
 export const closePlace = () => {
   return {
     type: CLOSE_PLACE
+  };
+};
+export const sharePlace = placeToShare => {
+  return {
+    type: SHARE_PLACE,
+    payload: placeToShare
   };
 };

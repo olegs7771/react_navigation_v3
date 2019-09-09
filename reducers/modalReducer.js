@@ -2,7 +2,8 @@ import {
   ADD_PLACE,
   SELECT_PLACE,
   CLOSE_PLACE,
-  DELETE_PLACE
+  DELETE_PLACE,
+  SHARE_PLACE
 } from "../action/types";
 const initialState = {
   places: [],
@@ -35,6 +36,11 @@ export default function(state = initialState, action) {
           return place.id !== state.selectedPlace.id;
         }),
         selectedPlace: null
+      };
+    case SHARE_PLACE:
+      return {
+        ...state,
+        sharedPlaces: state.sharedPlaces.concat(action.payload)
       };
     default:
       return state;
