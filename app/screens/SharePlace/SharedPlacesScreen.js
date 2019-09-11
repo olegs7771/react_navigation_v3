@@ -11,7 +11,12 @@ export class SharedPlaces extends Component {
         <FlatList
           data={this.props.sharedPlaces}
           renderItem={({ item }) => (
-            <SharedPlacesItem key={item.key} name={item.name} />
+            <SharedPlacesItem
+              key={item.key}
+              name={item.name}
+              image={item.image}
+              text={item.text}
+            />
           )}
         />
       </View>
@@ -33,8 +38,8 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "row",
     justifyContent: "flex-start",
-    alignItems: "center",
     paddingTop: 35
   }
 });
