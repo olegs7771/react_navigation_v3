@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uuid from "uuid/v1";
 import {
   View,
   Text,
@@ -37,12 +38,13 @@ export class SharePlaceScreen extends Component {
   _sharePlace = () => {
     const { name, image, text } = this.state;
     const placeToShare = {
+      key: JSON.stringify(Math.random() * 1000),
+      id: uuid(),
       name,
       image,
       text
     };
 
-    console.log("placeToShare", placeToShare);
     this.props.sharePlace(placeToShare);
     this.props.navigation.navigate("SharedPlaces");
   };
