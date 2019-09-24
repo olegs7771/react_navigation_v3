@@ -45,32 +45,6 @@ const ModalBattomStack = createBottomTabNavigator({
   Detail: { screen: DetailScreen }
 });
 
-//Places/Shareplaces Navigation
-const PlacesBottomTab = createBottomTabNavigator(
-  {
-    Place: {
-      screen: PlacesScreen
-    },
-    Share: {
-      screen: SharePlaceScreen
-    }
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, tintColor }) => {
-        const { routeName } = navigation.state;
-        let iconName;
-        if (routeName === "Share") {
-          iconName = "md-share-alt";
-        } else if (routeName === "Place") {
-          iconName = "md-clipboard";
-        }
-        return <Icon name={iconName} size={25} color={tintColor} />;
-      }
-    })
-  }
-);
-
 //App Stack Navigation
 const AppDrawStack = createStackNavigator(
   {
@@ -106,7 +80,7 @@ const AppRootStack = createStackNavigator(
     DashBoard: AppDrawStack,
     Other: OtherScreen,
     Modal: ModalBattomStack,
-    Places: PlacesBottomTab,
+    Places: PlacesScreen,
     SharedPlaces: SharedPlacesScreen
   },
   {

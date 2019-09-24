@@ -1,45 +1,85 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, Text, Modal, StyleSheet, Button, Image } from "react-native";
 import { connect } from "react-redux";
-import { closePlace, deletePlace } from "../../../action/modalAction";
+import {
+  closePlace,
+  deletePlace,
+  sharePlace
+} from "../../../action/modalAction";
 
-const PlacesModal = props => {
+class PlacesModal extends Component {
+  state = {
+    sharedPlaces: []
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.sharedPlaces !== this.props.sharedPlaces) {
+      this.setState({
+        sharedPlaces: this.props.sharedPlaces
+      });
+    }
+  }
+
   _closePlace = () => {
     console.log("closed");
-
-    props.closePlace();
+    this.props.closePlace();
   };
 
   _deletePlace = () => {
     console.log("deleted");
-    props.deletePlace();
+    this.props.deletePlace();
   };
-  let modalContent;
-  if (props.selectedPlace) {
-    const { name, image, id, text } = props.selectedPlace;
-    modalContent = (
-      <View style={styles.container}>
-        <Text style={styles.textTitle}>{name}</Text>
-        <Image source={image} style={styles.image} />
-        <Text style={styles.textArticle}>{text}</Text>
-        <View style={styles.containerButtons}>
-          <Button title="Close" color="grey" onPress={this._closePlace} />
-          <Button title="Delete" color="red" onPress={this._deletePlace} />
+
+  _sharePlace = () => {
+    console.log("shared");
+    console.log(this.state.sharedPlaces.length);
+    if (this.state.sharedPlaces.length > 0) {
+      const isExists = this.state.sharedPlaces.find(place => {
+        return place.id === this.props.selectedPlace.id;
+      });
+      if (isExists) {
+        return;
+      } else {
+        this.props.sharePlace(this.props.selectedPlace);
+      }
+    } else {
+      this.props.sharePlace(this.props.selectedPlace);
+    }
+  };
+  render() {
+    let modalContent;
+    if (this.props.selectedPlace) {
+      const { name, image, text } = this.props.selectedPlace;
+      modalContent = (
+        <View style={styles.container}>
+          <Text style={styles.textTitle}>{name}</Text>
+          <Image source={image} style={styles.image} />
+          <Text style={styles.textArticle}>{text}</Text>
+          <View style={styles.containerButtons}>
+            <Button title="Close" color="grey" onPress={this._closePlace} />
+            <Button title="Delete" color="red" onPress={this._deletePlace} />
+            <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
+          </View>
         </View>
-      </View>
+      );
+    }
+
+    return (
+      <Modal visible={this.props.selectedPlace !== null} animationType="slide">
+        {modalContent}
+      </Modal>
     );
   }
+}
 
-  return (
-    <Modal visible={props.selectedPlace !== null} animationType="slide">
-      {modalContent}
-    </Modal>
-  );
-};
+const mapStateToProps = state => ({
+  selectedPlace: state.modal.selectedPlace,
+  sharedPlaces: state.modal.sharedPlaces
+});
 
 export default connect(
-  null,
-  { closePlace, deletePlace }
+  mapStateToProps,
+  { closePlace, deletePlace, sharePlace }
 )(PlacesModal);
 
 const styles = StyleSheet.create({

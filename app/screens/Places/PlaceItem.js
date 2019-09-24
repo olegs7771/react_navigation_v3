@@ -1,30 +1,33 @@
-import React from "react";
+import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
 import { selectPlaceID } from "../../../action/modalAction";
 
-const PlaceItem = props => {
+class PlaceItem extends Component {
   _onPressSelectID = () => {
-    console.log("props", props);
-
-    props.selectPlaceID(props.id);
+    this.props.selectPlaceID(this.props.id);
   };
 
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.containerTouchable}
-        onPress={this._onPressSelectID}
-      >
-        <Text style={styles.text}>{props.name}</Text>
-        <Image source={props.image} style={{ width: "100%", height: 200 }} />
-        <View>
-          <Text style={styles.textArticle}>{props.text}</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
+  render() {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.containerTouchable}
+          onPress={this._onPressSelectID}
+        >
+          <Text style={styles.text}>{this.props.name}</Text>
+          <Image
+            source={this.props.image}
+            style={{ width: "100%", height: 200 }}
+          />
+          <View>
+            <Text style={styles.textArticle}>{this.props.text}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+}
 
 export default connect(
   null,
