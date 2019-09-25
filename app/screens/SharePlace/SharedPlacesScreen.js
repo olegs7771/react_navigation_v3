@@ -8,6 +8,9 @@ export class SharedPlaces extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.containerTitle}>
+          <Text style={styles.textTitle}>Shared Places</Text>
+        </View>
         <FlatList
           data={this.props.sharedPlaces}
           renderItem={({ item }) => (
@@ -38,8 +41,17 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
     paddingTop: 35
+  },
+  containerTitle: {
+    borderWidth: 1,
+    paddingVertical: 5,
+    backgroundColor: "#719bf0"
+  },
+  textTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#fcfcfc"
   }
 });

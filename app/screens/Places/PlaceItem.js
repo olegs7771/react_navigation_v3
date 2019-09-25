@@ -12,7 +12,8 @@ import { selectPlaceID, sharePlace } from "../../../action/modalAction";
 
 class PlaceItem extends Component {
   state = {
-    sharedPlaces: []
+    sharedPlaces: [],
+    isShared: false
   };
 
   //Update State from Redux Props
@@ -33,6 +34,7 @@ class PlaceItem extends Component {
   _sharePlace = () => {
     const { id, image, text, navigate } = this.props;
     const newSharedPlace = {
+      key: JSON.stringify(Math.random()),
       id,
       image,
       text
@@ -45,6 +47,14 @@ class PlaceItem extends Component {
       });
       if (isExists) {
         console.log("exists");
+        this.setState({
+          isShared: true
+        });
+        setTimeout(() => {
+          this.setState({
+            isShared: false
+          });
+        }, 5000);
 
         return;
       } else {
@@ -58,6 +68,12 @@ class PlaceItem extends Component {
   };
 
   render() {
+    let isSharedContent;
+    if (this.state.isShared) {
+      isSharedContent = <Text style={styles.textMessage}>Already Shared</Text>;
+    } else {
+      isSharedContent = null;
+    }
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -73,6 +89,7 @@ class PlaceItem extends Component {
             <Text style={styles.textArticle}>{this.props.text}</Text>
           </View>
           <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
+          {isSharedContent}
         </TouchableOpacity>
       </View>
     );
@@ -110,5 +127,9 @@ const styles = StyleSheet.create({
   },
   textArticle: {
     padding: 10
+  },
+  textMessage: {
+    color: "red",
+    textAlign: "center"
   }
 });

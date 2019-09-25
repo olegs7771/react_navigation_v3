@@ -46,6 +46,10 @@ export class Places extends Component {
         <View style={styles.containerFeed}>
           <PlacesFeed navigate={this.props.navigation.navigate} />
         </View>
+        <Button
+          title="My Shared Places"
+          onPress={() => this.props.navigation.navigate("SharedPlaces")}
+        />
       </View>
     );
   }
