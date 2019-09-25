@@ -17,6 +17,7 @@ export class PlacesFeed extends Component {
               image={item.image}
               text={item.text}
               id={item.id}
+              navigate={this.props.navigate}
             />
           )}
         />

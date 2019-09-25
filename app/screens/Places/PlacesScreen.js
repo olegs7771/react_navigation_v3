@@ -44,7 +44,7 @@ export class Places extends Component {
           <Button title="Add Place" onPress={this._addPlace} />
         </View>
         <View style={styles.containerFeed}>
-          <PlacesFeed />
+          <PlacesFeed navigate={this.props.navigation.navigate} />
         </View>
       </View>
     );

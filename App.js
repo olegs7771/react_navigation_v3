@@ -17,6 +17,7 @@ import DetailScreen from "./app/screens/DetailScreen";
 import PlacesScreen from "./app/screens/Places/PlacesScreen";
 import SharePlaceScreen from "./app/screens/SharePlace/SharePlaceScreen";
 import SharedPlacesScreen from "./app/screens/SharePlace/SharedPlacesScreen";
+
 //Menu Draw Navigation
 
 import FirstItem from "./app/screens/DrawMenu/FirstItem";

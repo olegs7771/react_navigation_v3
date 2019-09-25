@@ -1,17 +1,10 @@
 import React, { Component } from "react";
 import { View, Text, Modal, StyleSheet, Button, Image } from "react-native";
 import { connect } from "react-redux";
-import {
-  closePlace,
-  deletePlace,
-  sharePlace
-} from "../../../action/modalAction";
+
+import { closePlace, deletePlace } from "../../../action/modalAction";
 
 class PlacesModal extends Component {
-  state = {
-    sharedPlaces: []
-  };
-
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.sharedPlaces !== this.props.sharedPlaces) {
       this.setState({
@@ -30,22 +23,6 @@ class PlacesModal extends Component {
     this.props.deletePlace();
   };
 
-  _sharePlace = () => {
-    console.log("shared");
-    console.log(this.state.sharedPlaces.length);
-    if (this.state.sharedPlaces.length > 0) {
-      const isExists = this.state.sharedPlaces.find(place => {
-        return place.id === this.props.selectedPlace.id;
-      });
-      if (isExists) {
-        return;
-      } else {
-        this.props.sharePlace(this.props.selectedPlace);
-      }
-    } else {
-      this.props.sharePlace(this.props.selectedPlace);
-    }
-  };
   render() {
     let modalContent;
     if (this.props.selectedPlace) {
@@ -58,7 +35,6 @@ class PlacesModal extends Component {
           <View style={styles.containerButtons}>
             <Button title="Close" color="grey" onPress={this._closePlace} />
             <Button title="Delete" color="red" onPress={this._deletePlace} />
-            <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
           </View>
         </View>
       );
@@ -73,13 +49,12 @@ class PlacesModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  selectedPlace: state.modal.selectedPlace,
-  sharedPlaces: state.modal.sharedPlaces
+  selectedPlace: state.modal.selectedPlace
 });
 
 export default connect(
   mapStateToProps,
-  { closePlace, deletePlace, sharePlace }
+  { closePlace, deletePlace }
 )(PlacesModal);
 
 const styles = StyleSheet.create({

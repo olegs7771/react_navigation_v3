@@ -12,7 +12,7 @@ export class SharedPlaces extends Component {
           data={this.props.sharedPlaces}
           renderItem={({ item }) => (
             <SharedPlacesItem
-              key={item.key}
+              key={item.id}
               name={item.name}
               image={item.image}
               text={item.text}

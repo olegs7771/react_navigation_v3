@@ -1,11 +1,60 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Button
+} from "react-native";
 import { connect } from "react-redux";
-import { selectPlaceID } from "../../../action/modalAction";
+import { selectPlaceID, sharePlace } from "../../../action/modalAction";
 
 class PlaceItem extends Component {
+  state = {
+    sharedPlaces: []
+  };
+
+  //Update State from Redux Props
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.sharedPlaces !== this.props.sharedPlaces) {
+      console.log("state updated");
+
+      this.setState({
+        sharedPlaces: this.props.sharedPlaces
+      });
+    }
+  }
   _onPressSelectID = () => {
     this.props.selectPlaceID(this.props.id);
+  };
+
+  //Share Place
+  _sharePlace = () => {
+    const { id, image, text, navigate } = this.props;
+    const newSharedPlace = {
+      id,
+      image,
+      text
+    };
+    console.log("shared");
+    console.log(this.state.sharedPlaces.length);
+    if (this.state.sharedPlaces.length > 0) {
+      const isExists = this.state.sharedPlaces.find(place => {
+        return place.id === id;
+      });
+      if (isExists) {
+        console.log("exists");
+
+        return;
+      } else {
+        this.props.sharePlace(newSharedPlace);
+        navigate("SharedPlaces");
+      }
+    } else {
+      this.props.sharePlace(newSharedPlace);
+      navigate("SharedPlaces");
+    }
   };
 
   render() {
@@ -23,15 +72,19 @@ class PlaceItem extends Component {
           <View>
             <Text style={styles.textArticle}>{this.props.text}</Text>
           </View>
+          <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
         </TouchableOpacity>
       </View>
     );
   }
 }
+const mapStateToProps = state => ({
+  sharedPlaces: state.modal.sharedPlaces
+});
 
 export default connect(
-  null,
-  { selectPlaceID }
+  mapStateToProps,
+  { selectPlaceID, sharePlace }
 )(PlaceItem);
 
 const styles = StyleSheet.create({
