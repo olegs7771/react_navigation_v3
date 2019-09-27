@@ -3,25 +3,27 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import SharedPlacesItem from "./SharedPlacesItem";
 
 import { connect } from "react-redux";
+import PlacesModal from "../Places/PlacesModal";
 
 export class SharedPlaces extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.containerTitle}>
-          <Text style={styles.textTitle}>Shared Places</Text>
+        <PlacesModal selectedPlace={this.props.selectedPlace} />
+        <View style={styles.containerFeed}>
+          <FlatList
+            data={this.props.sharedPlaces}
+            renderItem={({ item }) => (
+              <SharedPlacesItem
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                image={item.image}
+                text={item.text}
+              />
+            )}
+          />
         </View>
-        <FlatList
-          data={this.props.sharedPlaces}
-          renderItem={({ item }) => (
-            <SharedPlacesItem
-              key={item.id}
-              name={item.name}
-              image={item.image}
-              text={item.text}
-            />
-          )}
-        />
       </View>
     );
   }

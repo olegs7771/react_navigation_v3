@@ -20,9 +20,6 @@ export default class DashboardScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <CustomStyleText>
-          <TextTitle style={styles.textTitle}> Dashboard </TextTitle>
-        </CustomStyleText>
         <View style={styles.containerButton}>
           <TouchableOpacity
             style={styles.button}

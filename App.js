@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
 //Redux
@@ -23,22 +23,45 @@ import SharedPlacesScreen from "./app/screens/SharePlace/SharedPlacesScreen";
 import FirstItem from "./app/screens/DrawMenu/FirstItem";
 import SecondItem from "./app/screens/DrawMenu/SecondItem";
 import ThirdItem from "./app/screens/DrawMenu/ThirdItem";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import {
   createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator,
-  createDrawerNavigator,
   createAppContainer
 } from "react-navigation";
+import CustomDrawerContentComponent from "./app/navigation/CustomDrawerContentComponent";
 
 //Draw Navigation
 
-const DrawMenu = createDrawerNavigator({
-  Menu: { screen: DashboardScreen },
-  Item1: { screen: FirstItem },
-  Item2: { screen: SecondItem },
-  Item3: { screen: ThirdItem }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
 });
+
+const DrawMenu = createDrawerNavigator(
+  {
+    Home: { screen: DashboardScreen },
+    Places: PlacesScreen,
+    SharedPlaces: SharedPlacesScreen,
+    Item1: { screen: FirstItem },
+    Item2: { screen: SecondItem },
+    Item3: { screen: ThirdItem }
+  },
+  {
+    contentComponent: CustomDrawerContentComponent,
+    contentOptions: {
+      activeTintColor: "#e91e63",
+      itemsContainerStyle: {
+        marginVertical: 0
+      },
+      iconContainerStyle: {
+        opacity: 1
+      }
+    }
+  }
+);
 
 //Modal/Detail Navigation
 const ModalBattomStack = createBottomTabNavigator({
@@ -49,7 +72,7 @@ const ModalBattomStack = createBottomTabNavigator({
 //App Stack Navigation
 const AppDrawStack = createStackNavigator(
   {
-    DashBoard: DrawMenu
+    CoolAlbum: DrawMenu
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
@@ -80,9 +103,7 @@ const AppRootStack = createStackNavigator(
   {
     DashBoard: AppDrawStack,
     Other: OtherScreen,
-    Modal: ModalBattomStack,
-    Places: PlacesScreen,
-    SharedPlaces: SharedPlacesScreen
+    Modal: ModalBattomStack
   },
   {
     defaultNavigationOptions: ({ navigation }) => {

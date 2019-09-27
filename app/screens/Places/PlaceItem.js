@@ -32,14 +32,15 @@ class PlaceItem extends Component {
 
   //Share Place
   _sharePlace = () => {
-    const { id, image, text, navigate } = this.props;
+    const { id, name, image, text, navigate } = this.props;
     const newSharedPlace = {
       key: JSON.stringify(Math.random()),
       id,
+      name,
       image,
       text
     };
-    console.log("shared");
+
     console.log(this.state.sharedPlaces.length);
     if (this.state.sharedPlaces.length > 0) {
       const isExists = this.state.sharedPlaces.find(place => {
@@ -54,7 +55,7 @@ class PlaceItem extends Component {
           this.setState({
             isShared: false
           });
-        }, 5000);
+        }, 15000);
 
         return;
       } else {
@@ -68,11 +69,30 @@ class PlaceItem extends Component {
   };
 
   render() {
+    //Show Message
     let isSharedContent;
     if (this.state.isShared) {
       isSharedContent = <Text style={styles.textMessage}>Already Shared</Text>;
     } else {
       isSharedContent = null;
+    }
+    //Show Map
+    let mapContent;
+    if (this.state.showMap) {
+      mapContent = (
+        <View
+          style={{
+            height: 200,
+            width: "100%",
+            backgroundColor: "#b8bbbf",
+            marginBottom: 5
+          }}
+        >
+          <Text>Map Here</Text>
+        </View>
+      );
+    } else {
+      mapContent = null;
     }
     return (
       <View style={styles.container}>
@@ -87,6 +107,18 @@ class PlaceItem extends Component {
           />
           <View>
             <Text style={styles.textArticle}>{this.props.text}</Text>
+          </View>
+          {mapContent}
+          <View style={{ marginBottom: 5 }}>
+            <Button
+              title="Add Location"
+              color="#7595c9"
+              onPress={() =>
+                this.setState({
+                  showMap: !this.state.showMap
+                })
+              }
+            />
           </View>
           <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
           {isSharedContent}

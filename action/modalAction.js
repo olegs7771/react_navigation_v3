@@ -2,6 +2,7 @@ import {
   ADD_PLACE,
   SELECT_PLACE,
   DELETE_PLACE,
+  DELETE_SHARED_PLACE,
   CLOSE_PLACE,
   SHARE_PLACE
 } from "./types";
@@ -17,7 +18,14 @@ export const deletePlace = () => {
     type: DELETE_PLACE
   };
 };
+export const deleteSharedPlace = () => {
+  return {
+    type: DELETE_SHARED_PLACE
+  };
+};
 export const selectPlaceID = id => {
+  console.log("id", id);
+
   return {
     type: SELECT_PLACE,
     payload: id

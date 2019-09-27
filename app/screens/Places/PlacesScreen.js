@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  ScrollView
+} from "react-native";
 import InputForm from "../../components/InputForm";
 import TextTitle from "../../components/TextTitle";
 import PlacesFeed from "./PlacesFeed";
@@ -32,7 +39,7 @@ export class Places extends Component {
   };
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <PlacesModal selectedPlace={this.props.selectedPlace} />
         <TextTitle style={styles.textTitle}>Choose Place</TextTitle>
 
@@ -46,11 +53,14 @@ export class Places extends Component {
         <View style={styles.containerFeed}>
           <PlacesFeed navigate={this.props.navigation.navigate} />
         </View>
-        <Button
-          title="My Shared Places"
-          onPress={() => this.props.navigation.navigate("SharedPlaces")}
-        />
-      </View>
+
+        <View style={styles.containerButton}>
+          <Button
+            title="My Shared Places"
+            onPress={() => this.props.navigation.navigate("SharedPlaces")}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -67,23 +77,21 @@ export default connect(
 )(Places);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignContent: "center",
-    paddingVertical: 20,
-
-    paddingTop: 50
-  },
+  container: {},
 
   containerInput: {
-    flex: 1,
-    width: "60%",
-    marginLeft: "20%",
-    paddingTop: 10
+    width: "80%",
+    paddingTop: 10,
+    alignSelf: "center"
   },
   containerFeed: {
-    flex: 4,
-    flexDirection: "row"
+    marginTop: 20,
+    width: "80%",
+    alignSelf: "center"
+  },
+
+  containerButton: {
+    width: "80%",
+    alignSelf: "center"
   }
 });

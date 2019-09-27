@@ -3,6 +3,7 @@ import {
   SELECT_PLACE,
   CLOSE_PLACE,
   DELETE_PLACE,
+  DELETE_SHARED_PLACE,
   SHARE_PLACE
 } from "../action/types";
 const initialState = {
@@ -33,6 +34,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         places: state.places.filter(place => {
+          return place.id !== state.selectedPlace.id;
+        }),
+        selectedPlace: null,
+        sharedPlaces: state.sharedPlaces.filter(place => {
+          return place.id !== state.selectedPlace.id;
+        })
+      };
+    case DELETE_SHARED_PLACE:
+      return {
+        ...state,
+        sharedPlaces: state.sharedPlaces.filter(place => {
           return place.id !== state.selectedPlace.id;
         }),
         selectedPlace: null
