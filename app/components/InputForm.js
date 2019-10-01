@@ -14,9 +14,8 @@ export default class InputForm extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "flex-start",
-    paddingTop: 10,
-
-    marginBottom: 10
+    marginBottom: 10,
+    width: "100%"
   },
   textInput: {
     backgroundColor: "#fcfcfc",

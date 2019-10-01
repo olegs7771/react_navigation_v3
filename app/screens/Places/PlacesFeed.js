@@ -39,7 +39,6 @@ export default connect(
 
 styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row"
+    flex: 1
   }
 });

@@ -24,8 +24,6 @@ export const deleteSharedPlace = () => {
   };
 };
 export const selectPlaceID = id => {
-  console.log("id", id);
-
   return {
     type: SELECT_PLACE,
     payload: id

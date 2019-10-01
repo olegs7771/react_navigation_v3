@@ -19,8 +19,6 @@ class PlaceItem extends Component {
   //Update State from Redux Props
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.sharedPlaces !== this.props.sharedPlaces) {
-      console.log("state updated");
-
       this.setState({
         sharedPlaces: this.props.sharedPlaces
       });
@@ -47,7 +45,6 @@ class PlaceItem extends Component {
         return place.id === id;
       });
       if (isExists) {
-        console.log("exists");
         this.setState({
           isShared: true
         });

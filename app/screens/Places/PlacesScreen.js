@@ -1,11 +1,15 @@
 import React, { Component } from "react";
+import { NavigationEvents } from "react-navigation";
 import {
   View,
   Text,
   StyleSheet,
   Button,
   Image,
-  ScrollView
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
+  Animated
 } from "react-native";
 import InputForm from "../../components/InputForm";
 import TextTitle from "../../components/TextTitle";
@@ -17,8 +21,21 @@ import uuid from "uuid/v1";
 
 export class Places extends Component {
   state = {
-    placeName: ""
+    orientMode: "portrait",
+    placeLoaded: false
   };
+  constructor(props) {
+    super(props);
+    Dimensions.addEventListener("change", this.updateStyle);
+  }
+  //clear EventListner to avoid memory leak (navigation.event in view)
+
+  updateStyle = dims => {
+    this.setState({
+      orientMode: dims.window.height > 500 ? "portrait" : "landscape"
+    });
+  };
+
   _addPlace = () => {
     if (this.state.placeName.trim() === "") {
       return;
@@ -38,27 +55,89 @@ export class Places extends Component {
     this.props.addPlace(newPlace);
   };
   render() {
-    return (
-      <ScrollView style={styles.container}>
-        <PlacesModal selectedPlace={this.props.selectedPlace} />
-        <TextTitle style={styles.textTitle}>Choose Place</TextTitle>
-
-        <View style={styles.containerInput}>
+    const { orientMode } = this.state;
+    let titleContent;
+    if (orientMode === "portrait") {
+      titleContent = (
+        <TextTitle style={{ marginVertical: 10 }}>Choose Place</TextTitle>
+      );
+    }
+    //Create Animation Appearance of Input Form
+    let addPlaceInputContent;
+    if (!this.state.placeLoaded) {
+      addPlaceInputContent = (
+        <TouchableOpacity
+          onPress={() =>
+            this.setState({
+              placeLoaded: true
+            })
+          }
+        >
+          <View style={styles.containerAddPlaceBtn}>
+            <Text style={styles.textAddPlaceBtn}>Find Places</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    } else {
+      addPlaceInputContent = (
+        <View>
           <InputForm
             placeholder="Choose some place.."
             onChangeText={text => this.setState({ placeName: text })}
           />
           <Button title="Add Place" onPress={this._addPlace} />
         </View>
-        <View style={styles.containerFeed}>
-          <PlacesFeed navigate={this.props.navigation.navigate} />
-        </View>
+      );
+    }
 
-        <View style={styles.containerButton}>
-          <Button
-            title="My Shared Places"
-            onPress={() => this.props.navigation.navigate("SharedPlaces")}
-          />
+    return (
+      <ScrollView style={styles.containerScrollView}>
+        <NavigationEvents
+          onWillBlur={payload => {
+            Dimensions.removeEventListener("change", this.updateStyle); //clear EventListener
+            this.setState({
+              placeLoaded: false
+            });
+          }}
+        />
+        <View style={styles.container}>
+          {titleContent}
+
+          <PlacesModal selectedPlace={this.props.selectedPlace} />
+
+          <View
+            style={
+              orientMode === "portrait"
+                ? styles.containerInputAndFeed
+                : styles.containerInputAndFeedLandScape
+            }
+          >
+            <View
+              style={
+                orientMode === "portrait"
+                  ? styles.containerInput
+                  : styles.containerInputLandScape
+              }
+            >
+              {addPlaceInputContent}
+            </View>
+
+            <View
+              style={
+                orientMode === "portrait"
+                  ? styles.containerFeed
+                  : styles.containerFeedLandScape
+              }
+            >
+              <PlacesFeed navigate={this.props.navigation.navigate} />
+            </View>
+          </View>
+          <View style={styles.containerButton}>
+            <Button
+              title="My Shared Places"
+              onPress={() => this.props.navigation.navigate("SharedPlaces")}
+            />
+          </View>
         </View>
       </ScrollView>
     );
@@ -77,21 +156,28 @@ export default connect(
 )(Places);
 
 const styles = StyleSheet.create({
-  container: {},
-
-  containerInput: {
-    width: "80%",
-    paddingTop: 10,
-    alignSelf: "center"
+  containerScrollView: { flex: 1 },
+  container: { alignItems: "center", paddingVertical: 20 },
+  containerInputAndFeed: { width: "80%" },
+  containerInputAndFeedLandScape: {
+    flexDirection: "row",
+    width: "100%"
   },
-  containerFeed: {
-    marginTop: 20,
-    width: "80%",
-    alignSelf: "center"
+  containerInput: { width: "100%" },
+  containerInputLandScape: { width: "47%", marginLeft: 20 },
+  containerFeed: { marginVertical: 20 },
+  containerFeedLandScape: { width: "47%", marginLeft: 5 },
+  containerButton: { width: "80%", marginTop: 20 },
+  containerAddPlaceBtn: {
+    borderColor: "#5964a8",
+    borderRadius: 50,
+    padding: 20,
+    borderWidth: 4
   },
-
-  containerButton: {
-    width: "80%",
-    alignSelf: "center"
+  textAddPlaceBtn: {
+    color: "#5964a8",
+    fontSize: 26,
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });

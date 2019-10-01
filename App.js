@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Dimensions } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
 
 //Redux
@@ -52,12 +52,16 @@ const DrawMenu = createDrawerNavigator(
   {
     contentComponent: CustomDrawerContentComponent,
     contentOptions: {
+      inactiveTintColor: "#ffffff",
       activeTintColor: "#e91e63",
       itemsContainerStyle: {
         marginVertical: 0
       },
       iconContainerStyle: {
         opacity: 1
+      },
+      labelStyle: {
+        marginTop: 1
       }
     }
   }

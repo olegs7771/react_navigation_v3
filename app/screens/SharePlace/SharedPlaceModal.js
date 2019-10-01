@@ -14,12 +14,10 @@ class SharedPlaceModal extends Component {
   }
 
   _closePlace = () => {
-    console.log("closed");
     this.props.closePlace();
   };
 
   _deletePlace = () => {
-    console.log("deleted");
     this.props.deleteSharedPlace();
   };
 
