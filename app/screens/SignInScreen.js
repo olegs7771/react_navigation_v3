@@ -45,7 +45,11 @@ class SignInScreen extends Component {
   _updateInputState = (key, value) => {
     let passwordValue = {};
     if (this.state.control[key].validationRules.equelTo) {
-      passwordValue = this.state.control;
+      let equalControl = this.state.control[key].validationRules.equelTo;
+      passwordValue = {
+        ...passwordValue,
+        equelTo: equalControl
+      };
     }
     console.log(
       "this.state.control[key]",
