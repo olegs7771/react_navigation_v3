@@ -45,18 +45,24 @@ class SignInScreen extends Component {
   _updateInputState = (key, value) => {
     let passwordValue = {};
     if (this.state.control[key].validationRules.equelTo) {
-      let equalControl = this.state.control[key].validationRules.equelTo;
+      const equalToNamePassword2 = this.state.control[key].validationRules
+        .equelTo;
+      const valuePassword1 = this.state.control[equalToNamePassword2].value;
       passwordValue = {
         ...passwordValue,
-        equelTo: equalControl
+        equelTo: valuePassword1
       };
     }
-    console.log(
-      "this.state.control[key]",
-      this.state.control[key].validationRules.equelTo
-    );
-    // console.log("key:", key);
-    // console.log("value:", value);
+    // if (key === "password1") {
+    //   const equalToNamePassword2 = "password1";
+    //   const valuePassword1 = this.state.control[equalToNamePassword2].value;
+    //   passwordValue = {
+    //     ...passwordValue,
+    //     equelTo: valuePassword1
+    //   };
+    // }
+    console.log("key:", key);
+    console.log("value:", value);
     this.setState(prevState => {
       return {
         control: {
@@ -64,13 +70,37 @@ class SignInScreen extends Component {
           [key]: {
             ...prevState.control[key],
             value: value,
-            valid: validate(value, prevState.control.validationRules)
+            valid: validate(
+              value,
+              prevState.control[key].validationRules,
+              passwordValue
+            )
+          },
+          password2: {
+            ...prevState.control.password2,
+            valid:
+              key === "password1"
+                ? validate(
+                    prevState.control.password2.value,
+                    prevState.control.password2.validationRules,
+                    passwordValue
+                  )
+                : prevState.control.password2.valid
           }
         }
       };
     });
   };
-  _signIn = () => {};
+  _signIn = () => {
+    validate(
+      "one",
+      {
+        isEmail: "green",
+        minLength: "big"
+      },
+      "password1Value"
+    );
+  };
 
   render() {
     return (
