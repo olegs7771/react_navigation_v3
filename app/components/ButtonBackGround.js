@@ -1,23 +1,29 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-const ButtonBackGround = props => (
-  <TouchableOpacity onPress={props.onPress}>
-    <View
-      {...props}
-      style={[
-        styles.button,
-        {
-          backgroundColor: props.color,
-          width: props.width,
-          marginBottom: props.marginBottom
-        }
-      ]}
-    >
-      <Text style={styles.text}>{props.children}</Text>
-    </View>
-  </TouchableOpacity>
-);
+const ButtonBackGround = props => {
+  if (props.disabled) {
+    return (
+      <View
+        {...props}
+        style={[styles.button, props.disabled ? styles.disabled : null]}
+      >
+        <Text style={styles.text}>{props.children}</Text>
+      </View>
+    );
+  } else {
+    return (
+      <TouchableOpacity onPress={props.onPress}>
+        <View
+          {...props}
+          style={[styles.button, props.disabled ? styles.disabled : null]}
+        >
+          <Text style={styles.text}>{props.children}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+};
 
 export default ButtonBackGround;
 
@@ -34,5 +40,9 @@ const styles = StyleSheet.create({
   text: {
     color: "#ffffff",
     textAlign: "center"
+  },
+  disabled: {
+    backgroundColor: "#999d9e",
+    padding: 10
   }
 });

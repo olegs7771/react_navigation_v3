@@ -10,6 +10,7 @@ import {
 import InputForm from "../components/InputForm";
 import ButtonBackGround from "../components/ButtonBackGround";
 import validate from "../utils/Validation";
+import { connect } from "react-redux";
 
 class SignInScreen extends Component {
   static navigationOptions = {
@@ -17,89 +18,86 @@ class SignInScreen extends Component {
   };
 
   state = {
-    control: {
+    controls: {
       email: {
         value: "",
         valid: false,
         validationRules: {
           isEmail: true
-        }
+        },
+        touched: false
       },
-      password1: {
+      password: {
         value: "",
         valid: false,
         validationRules: {
           minLength: 6
-        }
+        },
+        touched: false
       },
-      password2: {
+      confirmPassword: {
         value: "",
         valid: false,
         validationRules: {
-          equelTo: "password1"
-        }
+          equelTo: "password"
+        },
+        touched: false
       }
     }
   };
 
   _updateInputState = (key, value) => {
-    let passwordValue = {};
-    if (this.state.control[key].validationRules.equelTo) {
-      const equalToNamePassword2 = this.state.control[key].validationRules
-        .equelTo;
-      const valuePassword1 = this.state.control[equalToNamePassword2].value;
-      passwordValue = {
-        ...passwordValue,
-        equelTo: valuePassword1
+    let connectedValue = {};
+    if (this.state.controls[key].validationRules.equelTo) {
+      const equelControl = this.state.controls[key].validationRules.equelTo;
+      const equelValue = this.state.controls[equelControl].value;
+      connectedValue = {
+        ...connectedValue,
+        equelTo: equelValue
       };
     }
-    // if (key === "password1") {
-    //   const equalToNamePassword2 = "password1";
-    //   const valuePassword1 = this.state.control[equalToNamePassword2].value;
-    //   passwordValue = {
-    //     ...passwordValue,
-    //     equelTo: valuePassword1
-    //   };
-    // }
+    if (key === "password") {
+      connectedValue = {
+        ...connectedValue,
+        equelTo: value
+      };
+    }
     console.log("key:", key);
     console.log("value:", value);
     this.setState(prevState => {
+      // console.log("prevState.controls[key]", prevState.controls[key]);
+
       return {
-        control: {
-          ...prevState.control,
+        controls: {
+          ...prevState.controls,
+          confirmPassword: {
+            ...prevState.controls.confirmPassword,
+            valid:
+              key === "password"
+                ? validate(
+                    prevState.controls.confirmPassword.value,
+                    prevState.controls.confirmPassword.validationRules,
+                    connectedValue
+                  )
+                : prevState.controls.confirmPassword.valid
+          },
           [key]: {
-            ...prevState.control[key],
+            ...prevState.controls[key],
             value: value,
             valid: validate(
               value,
-              prevState.control[key].validationRules,
-              passwordValue
-            )
-          },
-          password2: {
-            ...prevState.control.password2,
-            valid:
-              key === "password1"
-                ? validate(
-                    prevState.control.password2.value,
-                    prevState.control.password2.validationRules,
-                    passwordValue
-                  )
-                : prevState.control.password2.valid
+              prevState.controls[key].validationRules,
+              connectedValue
+            ),
+            touched: true
           }
         }
       };
     });
   };
+
   _signIn = () => {
-    validate(
-      "one",
-      {
-        isEmail: "green",
-        minLength: "big"
-      },
-      "password1Value"
-    );
+    this.props.navigation.navigate("App");
   };
 
   render() {
@@ -116,22 +114,38 @@ class SignInScreen extends Component {
           <View style={styles.containerForms}>
             <InputForm
               placeholder="Email"
-              value={this.state.control.email.value}
-              onChangeText={value => this._updateInputState("email", value)}
+              value={this.state.controls.email.value}
+              onChangeText={val => this._updateInputState("email", val)}
+              valid={this.state.controls.email.valid}
+              touched={this.state.controls.email.touched}
             />
             <InputForm
               placeholder="Password"
-              value={this.state.control.password1.value}
-              onChangeText={value => this._updateInputState("password1", value)}
+              value={this.state.controls.password.value}
+              onChangeText={val => this._updateInputState("password", val)}
+              valid={this.state.controls.password.valid}
+              touched={this.state.controls.password.touched}
             />
 
             <InputForm
               placeholder="Confirm Password"
-              value={this.state.control.password2.value}
-              onChangeText={value => this._updateInputState("password2", value)}
+              value={this.state.controls.confirmPassword.value}
+              onChangeText={val =>
+                this._updateInputState("confirmPassword", val)
+              }
+              valid={this.state.controls.confirmPassword.valid}
+              touched={this.state.controls.confirmPassword.touched}
             />
 
-            <ButtonBackGround onPress={this._signIn} color="#415956">
+            <ButtonBackGround
+              onPress={this._signIn}
+              color="#415956"
+              disabled={
+                !this.state.controls.email.valid ||
+                !this.state.controls.password.valid ||
+                !this.state.controls.confirmPassword.valid
+              }
+            >
               SignIn
             </ButtonBackGround>
           </View>
@@ -140,7 +154,7 @@ class SignInScreen extends Component {
     );
   }
 }
-export default SignInScreen;
+export default connect()(SignInScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -150,11 +164,12 @@ const styles = StyleSheet.create({
     paddingTop: 35
   },
   containerForms: {
+    marginTop: 20,
     flex: 1,
     width: "80%"
   },
   textTitle: {
-    fontSize: 20,
+    fontSize: 35,
     fontWeight: "bold",
     color: "#ffffff",
     marginTop: 40
