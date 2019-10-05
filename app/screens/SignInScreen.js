@@ -102,10 +102,10 @@ class SignInScreen extends Component {
       password: this.state.controls.password.value
     };
     this.props.regesterUser(newUser);
+    this.props.navigation.navigate("App");
   };
 
   render() {
-    this.props.navigation.navigate("App");
     return (
       <ImageBackground
         source={{
