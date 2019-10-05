@@ -11,6 +11,7 @@ import InputForm from "../components/InputForm";
 import ButtonBackGround from "../components/ButtonBackGround";
 import validate from "../utils/Validation";
 import { connect } from "react-redux";
+import { regesterUser } from "../../action/authAction";
 
 class SignInScreen extends Component {
   static navigationOptions = {
@@ -62,8 +63,7 @@ class SignInScreen extends Component {
         equelTo: value
       };
     }
-    console.log("key:", key);
-    console.log("value:", value);
+
     this.setState(prevState => {
       // console.log("prevState.controls[key]", prevState.controls[key]);
 
@@ -97,10 +97,15 @@ class SignInScreen extends Component {
   };
 
   _signIn = () => {
-    this.props.navigation.navigate("App");
+    const newUser = {
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value
+    };
+    this.props.regesterUser(newUser);
   };
 
   render() {
+    this.props.navigation.navigate("App");
     return (
       <ImageBackground
         source={{
@@ -154,7 +159,10 @@ class SignInScreen extends Component {
     );
   }
 }
-export default connect()(SignInScreen);
+export default connect(
+  null,
+  { regesterUser }
+)(SignInScreen);
 
 const styles = StyleSheet.create({
   container: {

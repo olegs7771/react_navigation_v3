@@ -24,16 +24,13 @@ const validate = (val, rules, connectedValue) => {
 
 const emailValidator = val => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return regex.test(val);
+  return regex.test(val.trim());
 };
 
 const minLengthValidator = (val, minLength) => {
   return val.length >= minLength;
 };
 const equelToValidator = (val, password) => {
-  console.log("val", val);
-  console.log("password", password);
-
   return val === password;
 };
 
