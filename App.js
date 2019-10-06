@@ -81,7 +81,8 @@ const AppDrawStack = createStackNavigator(
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        headerTitle: navigation.state.routeName,
+        title: navigation.getParam("otherParam"),
+
         headerLeft: (
           <Icon
             name="md-menu"

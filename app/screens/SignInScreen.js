@@ -5,7 +5,8 @@ import {
   View,
   Button,
   AsyncStorage,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity
 } from "react-native";
 import InputForm from "../components/InputForm";
 import ButtonBackGround from "../components/ButtonBackGround";
@@ -19,6 +20,7 @@ class SignInScreen extends Component {
   };
 
   state = {
+    authMode: "login",
     controls: {
       email: {
         value: "",
@@ -105,6 +107,14 @@ class SignInScreen extends Component {
     this.props.navigation.navigate("App");
   };
 
+  _switchAuth = () => {
+    this.setState(prevState => {
+      return {
+        authMode: prevState.authMode === "login" ? "signup" : "login"
+      };
+    });
+  };
+
   render() {
     return (
       <ImageBackground
@@ -115,45 +125,96 @@ class SignInScreen extends Component {
         style={{ width: "100%", height: "100%" }}
       >
         <View style={styles.container}>
-          <Text style={styles.textTitle}> SignIn </Text>
-          <View style={styles.containerForms}>
-            <InputForm
-              placeholder="Email"
-              value={this.state.controls.email.value}
-              onChangeText={val => this._updateInputState("email", val)}
-              valid={this.state.controls.email.valid}
-              touched={this.state.controls.email.touched}
-            />
-            <InputForm
-              placeholder="Password"
-              value={this.state.controls.password.value}
-              onChangeText={val => this._updateInputState("password", val)}
-              valid={this.state.controls.password.valid}
-              touched={this.state.controls.password.touched}
-            />
-
-            <InputForm
-              placeholder="Confirm Password"
-              value={this.state.controls.confirmPassword.value}
-              onChangeText={val =>
-                this._updateInputState("confirmPassword", val)
-              }
-              valid={this.state.controls.confirmPassword.valid}
-              touched={this.state.controls.confirmPassword.touched}
-            />
-
-            <ButtonBackGround
-              onPress={this._signIn}
-              color="#415956"
-              disabled={
-                !this.state.controls.email.valid ||
-                !this.state.controls.password.valid ||
-                !this.state.controls.confirmPassword.valid
-              }
+          <TouchableOpacity onPress={this._switchAuth}>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "#ffffff",
+                padding: 5,
+                borderRadius: 5
+              }}
             >
-              SignIn
-            </ButtonBackGround>
-          </View>
+              {this.state.authMode === "signup" ? (
+                <Text style={styles.textTitle}>Go To Login </Text>
+              ) : (
+                <Text style={styles.textTitle}>Go To SignIn</Text>
+              )}
+            </View>
+          </TouchableOpacity>
+          {this.state.authMode === "signup" ? (
+            <View style={styles.containerForms}>
+              <InputForm
+                placeholder="Email"
+                value={this.state.controls.email.value}
+                onChangeText={val => this._updateInputState("email", val)}
+                valid={this.state.controls.email.valid}
+                touched={this.state.controls.email.touched}
+              />
+              <InputForm
+                placeholder="Password"
+                value={this.state.controls.password.value}
+                onChangeText={val => this._updateInputState("password", val)}
+                valid={this.state.controls.password.valid}
+                touched={this.state.controls.password.touched}
+              />
+
+              <InputForm
+                placeholder="Confirm Password"
+                value={this.state.controls.confirmPassword.value}
+                onChangeText={val =>
+                  this._updateInputState("confirmPassword", val)
+                }
+                valid={this.state.controls.confirmPassword.valid}
+                touched={this.state.controls.confirmPassword.touched}
+              />
+
+              <ButtonBackGround
+                onPress={this._signIn}
+                color="#415956"
+                disabled={
+                  !this.state.controls.email.valid ||
+                  !this.state.controls.password.valid ||
+                  !this.state.controls.confirmPassword.valid
+                }
+              >
+                SignIn
+              </ButtonBackGround>
+            </View>
+          ) : (
+            <View style={styles.containerForms}>
+              <InputForm
+                placeholder="Email"
+                value={this.state.controls.email.value}
+                onChangeText={val => this._updateInputState("email", val)}
+                valid={this.state.controls.email.valid}
+                touched={this.state.controls.email.touched}
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+                keyboardType="email-address"
+              />
+              <InputForm
+                placeholder="Password"
+                value={this.state.controls.password.value}
+                onChangeText={val => this._updateInputState("password", val)}
+                valid={this.state.controls.password.valid}
+                touched={this.state.controls.password.touched}
+              />
+
+              <ButtonBackGround
+                onPress={this._signIn}
+                color="#415956"
+                disabled={
+                  !this.state.controls.email.valid ||
+                  !this.state.controls.password.valid ||
+                  (!this.state.controls.confirmPassword.valid &&
+                    this.state.authMode === "signup")
+                }
+              >
+                Login
+              </ButtonBackGround>
+            </View>
+          )}
         </View>
       </ImageBackground>
     );
@@ -169,7 +230,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 35
+    paddingTop: 70
   },
   containerForms: {
     marginTop: 20,
@@ -177,9 +238,8 @@ const styles = StyleSheet.create({
     width: "80%"
   },
   textTitle: {
-    fontSize: 35,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#ffffff",
-    marginTop: 40
+    color: "#ffffff"
   }
 });

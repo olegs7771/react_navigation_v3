@@ -20,6 +20,12 @@ export default class DashboardScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Button
+          title="Update the title"
+          onPress={() =>
+            this.props.navigation.setParams({ otherParam: "Updated!" })
+          }
+        />
         <View style={styles.containerButton}>
           <TouchableOpacity
             style={styles.button}
