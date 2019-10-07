@@ -6,7 +6,7 @@ export default class InputForm extends Component {
     valid: false
   };
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
+    if (prevProps.valid !== this.props.valid) {
       if (this.props.value.trim().length < 1 || this.props.valid) {
         this.setState({
           valid: true
@@ -27,7 +27,14 @@ export default class InputForm extends Component {
           !this.state.valid && this.props.touched ? styles.invalid : null
         ]}
       >
-        <TextInput {...this.props} style={[styles.textInput]} />
+        <TextInput
+          {...this.props}
+          style={[
+            this.props.placeName
+              ? styles.textInputChoosePlace
+              : styles.textInput
+          ]}
+        />
       </View>
     );
   }
@@ -46,6 +53,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     color: "#ffffff",
+    fontSize: 22
+  },
+  textInputChoosePlace: {
+    color: "#446396",
     fontSize: 22
   },
   invalid: {

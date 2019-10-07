@@ -24,8 +24,8 @@ import FirstItem from "./app/screens/DrawMenu/FirstItem";
 import SecondItem from "./app/screens/DrawMenu/SecondItem";
 import ThirdItem from "./app/screens/DrawMenu/ThirdItem";
 import { createDrawerNavigator } from "react-navigation-drawer";
+import { createStackNavigator } from "react-navigation-stack";
 import {
-  createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator,
   createAppContainer
@@ -39,10 +39,18 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+//Modal/Detail Navigation
+const ModalBattomStack = createBottomTabNavigator({
+  Modal: { screen: ModalScreen },
+  Detail: { screen: DetailScreen }
+});
 
 const DrawMenu = createDrawerNavigator(
   {
     Home: { screen: DashboardScreen },
+    Other: OtherScreen,
+    Modal: ModalBattomStack,
+
     Places: PlacesScreen,
     SharedPlaces: SharedPlacesScreen,
     Item1: { screen: FirstItem },
@@ -67,21 +75,14 @@ const DrawMenu = createDrawerNavigator(
   }
 );
 
-//Modal/Detail Navigation
-const ModalBattomStack = createBottomTabNavigator({
-  Modal: { screen: ModalScreen },
-  Detail: { screen: DetailScreen }
-});
-
-//App Stack Navigation
-const AppDrawStack = createStackNavigator(
+const AppRootStack = createStackNavigator(
   {
     CoolAlbum: DrawMenu
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: navigation.getParam("otherParam"),
+        title: navigation.state.routeName,
 
         headerLeft: (
           <Icon
@@ -99,21 +100,6 @@ const AppDrawStack = createStackNavigator(
           marginLeft: "33%"
         },
         headerTintColor: "#fcfcfc"
-      };
-    }
-  }
-);
-
-const AppRootStack = createStackNavigator(
-  {
-    DashBoard: AppDrawStack,
-    Other: OtherScreen,
-    Modal: ModalBattomStack
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        header: null
       };
     }
   }

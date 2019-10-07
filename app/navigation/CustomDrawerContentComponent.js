@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import {
   StyleSheet,
   ScrollView,
@@ -9,8 +11,8 @@ import {
   Platform
 } from "react-native";
 import Icon from "@expo/vector-icons/Ionicons";
-
 import { DrawerNavigatorItems } from "react-navigation-drawer";
+
 class CustomDrawerContentComponent extends Component {
   _signOut = async () => {
     await AsyncStorage.clear();
@@ -18,6 +20,8 @@ class CustomDrawerContentComponent extends Component {
   };
 
   render() {
+    console.log("user", this.props.user);
+
     return (
       <ScrollView style={styles.container}>
         <View style={styles.containerIcon}>
@@ -25,6 +29,9 @@ class CustomDrawerContentComponent extends Component {
             style={{ flexDirection: "row", alignItems: "center" }}
             onPress={this._signOut}
           >
+            <Text style={{ color: "#ffffff", marginLeft: 5 }}>
+              {this.props.user.email}
+            </Text>
             <Icon
               name={Platform.OS === "android" ? "md-log-out" : null}
               size={30}
@@ -52,4 +59,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-export default CustomDrawerContentComponent;
+
+const mapStateToprops = state => ({
+  user: state.auth.user
+});
+export default connect(mapStateToprops)(CustomDrawerContentComponent);

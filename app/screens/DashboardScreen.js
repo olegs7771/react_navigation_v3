@@ -10,22 +10,23 @@ import {
 } from "react-native";
 import TextTitle from "../components/TextTitle";
 import CustomStyleText from "../components/CustomStyleText";
+import { getActiveChildNavigationOptions } from "react-navigation";
 
 export default class DashboardScreen extends Component {
+  constructor(props) {
+    super(props);
+    props.navigation.setParams({ userName: "some name" });
+  }
   _signOut = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate("Auth");
   };
 
   render() {
+    console.log("this.props", this.props.navigation.state);
+
     return (
       <View style={styles.container}>
-        <Button
-          title="Update the title"
-          onPress={() =>
-            this.props.navigation.setParams({ otherParam: "Updated!" })
-          }
-        />
         <View style={styles.containerButton}>
           <TouchableOpacity
             style={styles.button}

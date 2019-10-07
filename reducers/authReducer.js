@@ -1,7 +1,7 @@
 import { REGISTER_USER } from "../action/types";
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: null
 };
 export default function(state = initialState, action) {
   switch (action.type) {

@@ -6,7 +6,10 @@ import {
   Button,
   AsyncStorage,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 import InputForm from "../components/InputForm";
 import ButtonBackGround from "../components/ButtonBackGround";
@@ -124,98 +127,100 @@ class SignInScreen extends Component {
         }}
         style={{ width: "100%", height: "100%" }}
       >
-        <View style={styles.container}>
-          <TouchableOpacity onPress={this._switchAuth}>
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: "#ffffff",
-                padding: 5,
-                borderRadius: 5
-              }}
-            >
-              {this.state.authMode === "signup" ? (
-                <Text style={styles.textTitle}>Go To Login </Text>
-              ) : (
-                <Text style={styles.textTitle}>Go To SignIn</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-          {this.state.authMode === "signup" ? (
-            <View style={styles.containerForms}>
-              <InputForm
-                placeholder="Email"
-                value={this.state.controls.email.value}
-                onChangeText={val => this._updateInputState("email", val)}
-                valid={this.state.controls.email.valid}
-                touched={this.state.controls.email.touched}
-              />
-              <InputForm
-                placeholder="Password"
-                value={this.state.controls.password.value}
-                onChangeText={val => this._updateInputState("password", val)}
-                valid={this.state.controls.password.valid}
-                touched={this.state.controls.password.touched}
-              />
-
-              <InputForm
-                placeholder="Confirm Password"
-                value={this.state.controls.confirmPassword.value}
-                onChangeText={val =>
-                  this._updateInputState("confirmPassword", val)
-                }
-                valid={this.state.controls.confirmPassword.valid}
-                touched={this.state.controls.confirmPassword.touched}
-              />
-
-              <ButtonBackGround
-                onPress={this._signIn}
-                color="#415956"
-                disabled={
-                  !this.state.controls.email.valid ||
-                  !this.state.controls.password.valid ||
-                  !this.state.controls.confirmPassword.valid
-                }
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <TouchableOpacity onPress={this._switchAuth}>
+              <View
+                style={{
+                  borderWidth: 1,
+                  borderColor: "#ffffff",
+                  padding: 5,
+                  borderRadius: 5
+                }}
               >
-                SignIn
-              </ButtonBackGround>
-            </View>
-          ) : (
-            <View style={styles.containerForms}>
-              <InputForm
-                placeholder="Email"
-                value={this.state.controls.email.value}
-                onChangeText={val => this._updateInputState("email", val)}
-                valid={this.state.controls.email.valid}
-                touched={this.state.controls.email.touched}
-                autoCapitalize="none"
-                autoCompleteType="email"
-                autoCorrect={false}
-                keyboardType="email-address"
-              />
-              <InputForm
-                placeholder="Password"
-                value={this.state.controls.password.value}
-                onChangeText={val => this._updateInputState("password", val)}
-                valid={this.state.controls.password.valid}
-                touched={this.state.controls.password.touched}
-              />
+                {this.state.authMode === "signup" ? (
+                  <Text style={styles.textTitle}>Go To Login </Text>
+                ) : (
+                  <Text style={styles.textTitle}>Go To SignIn</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+            {this.state.authMode === "signup" ? (
+              <View style={styles.containerForms}>
+                <InputForm
+                  placeholder="Email"
+                  value={this.state.controls.email.value}
+                  onChangeText={val => this._updateInputState("email", val)}
+                  valid={this.state.controls.email.valid}
+                  touched={this.state.controls.email.touched}
+                />
+                <InputForm
+                  placeholder="Password"
+                  value={this.state.controls.password.value}
+                  onChangeText={val => this._updateInputState("password", val)}
+                  valid={this.state.controls.password.valid}
+                  touched={this.state.controls.password.touched}
+                />
 
-              <ButtonBackGround
-                onPress={this._signIn}
-                color="#415956"
-                disabled={
-                  !this.state.controls.email.valid ||
-                  !this.state.controls.password.valid ||
-                  (!this.state.controls.confirmPassword.valid &&
-                    this.state.authMode === "signup")
-                }
-              >
-                Login
-              </ButtonBackGround>
-            </View>
-          )}
-        </View>
+                <InputForm
+                  placeholder="Confirm Password"
+                  value={this.state.controls.confirmPassword.value}
+                  onChangeText={val =>
+                    this._updateInputState("confirmPassword", val)
+                  }
+                  valid={this.state.controls.confirmPassword.valid}
+                  touched={this.state.controls.confirmPassword.touched}
+                />
+
+                <ButtonBackGround
+                  onPress={this._signIn}
+                  color="#415956"
+                  disabled={
+                    !this.state.controls.email.valid ||
+                    !this.state.controls.password.valid ||
+                    !this.state.controls.confirmPassword.valid
+                  }
+                >
+                  SignIn
+                </ButtonBackGround>
+              </View>
+            ) : (
+              <View style={styles.containerForms}>
+                <InputForm
+                  placeholder="Email"
+                  value={this.state.controls.email.value}
+                  onChangeText={val => this._updateInputState("email", val)}
+                  valid={this.state.controls.email.valid}
+                  touched={this.state.controls.email.touched}
+                  autoCapitalize="none"
+                  autoCompleteType="email"
+                  autoCorrect={false}
+                  keyboardType="email-address"
+                />
+                <InputForm
+                  placeholder="Password"
+                  value={this.state.controls.password.value}
+                  onChangeText={val => this._updateInputState("password", val)}
+                  valid={this.state.controls.password.valid}
+                  touched={this.state.controls.password.touched}
+                />
+
+                <ButtonBackGround
+                  onPress={this._signIn}
+                  color="#415956"
+                  disabled={
+                    !this.state.controls.email.valid ||
+                    !this.state.controls.password.valid ||
+                    (!this.state.controls.confirmPassword.valid &&
+                      this.state.authMode === "signup")
+                  }
+                >
+                  Login
+                </ButtonBackGround>
+              </View>
+            )}
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     );
   }

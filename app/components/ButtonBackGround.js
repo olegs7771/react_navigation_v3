@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
 const ButtonBackGround = props => {
   if (props.disabled) {
+    //change here
     return (
       <View
         {...props}

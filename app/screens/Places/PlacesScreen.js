@@ -21,6 +21,7 @@ import uuid from "uuid/v1";
 
 export class Places extends Component {
   state = {
+    placeName: "",
     orientMode: "portrait",
     placeLoaded: false
   };
@@ -82,6 +83,7 @@ export class Places extends Component {
       addPlaceInputContent = (
         <View>
           <InputForm
+            placeName={this.state.placeName}
             placeholder="Choose some place.."
             onChangeText={text => this.setState({ placeName: text })}
           />

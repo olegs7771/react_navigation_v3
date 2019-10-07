@@ -5,6 +5,7 @@ export default class OtherScreen extends Component {
   _showModel = () => {
     this.props.navigation.navigate("Modal");
   };
+
   render() {
     return (
       <View style={styles.container}>
