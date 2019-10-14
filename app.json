@@ -6,7 +6,6 @@
     "sdkVersion": "34.0.0",
     "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
-    "android.config.googleMaps.apiKey":"AIzaSyBgcr3wy6zEl-3E2WtYjxyKol5yuPbxDS4",
 
     "icon": "./assets/icon.png",
     "splash": {

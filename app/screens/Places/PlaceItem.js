@@ -10,10 +10,13 @@ import {
 import { connect } from "react-redux";
 import { selectPlaceID, sharePlace } from "../../../action/modalAction";
 
+import PlacesMap from "./PlacesMap";
+
 class PlaceItem extends Component {
   state = {
     sharedPlaces: [],
-    isShared: false
+    isShared: false,
+    isMapChoosed: false
   };
 
   //Update State from Redux Props
@@ -76,26 +79,16 @@ class PlaceItem extends Component {
     //Show Map
     let mapContent;
     if (this.state.showMap) {
-      mapContent = (
-        <View
-          style={{
-            height: 200,
-            width: "100%",
-            backgroundColor: "#b8bbbf",
-            marginBottom: 5
-          }}
-        >
-          <Text>Map Here</Text>
-        </View>
-      );
+      mapContent = <PlacesMap />;
     } else {
       mapContent = null;
     }
     return (
       <View style={styles.container}>
         <TouchableOpacity
+          disabled={this.state.isMapChoosed ? true : false}
           style={styles.containerTouchable}
-          onPress={this._onPressSelectID}
+          onPress={this.state.isMapChoosed ? null : this._onPressSelectID}
         >
           <Text style={styles.text}>{this.props.name}</Text>
           <Image
@@ -112,7 +105,8 @@ class PlaceItem extends Component {
               color="#7595c9"
               onPress={() =>
                 this.setState({
-                  showMap: !this.state.showMap
+                  showMap: !this.state.showMap,
+                  isMapChoosed: true
                 })
               }
             />

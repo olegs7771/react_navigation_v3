@@ -160,7 +160,7 @@ export default connect(
 const styles = StyleSheet.create({
   containerScrollView: { flex: 1 },
   container: { alignItems: "center", paddingVertical: 20 },
-  containerInputAndFeed: { width: "80%" },
+  containerInputAndFeed: { width: "100%" },
   containerInputAndFeedLandScape: {
     flexDirection: "row",
     width: "100%"

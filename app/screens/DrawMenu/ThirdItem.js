@@ -1,23 +1,14 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
+
 import MapView from "react-native-maps";
 
 export class ThirdItem extends Component {
+  _handleMapRegionChange = mapRegion => {
+    this.setState({ mapRegion });
+  };
   render() {
-    return (
-      <View>
-        <Text> Third Item </Text>
-        <MapView
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }}
-        />
-      </View>
-    );
+    return <MapView style={{ flex: 1 }} />;
   }
 }
 

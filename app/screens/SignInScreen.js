@@ -192,7 +192,7 @@ class SignInScreen extends Component {
                   onChangeText={val => this._updateInputState("email", val)}
                   valid={this.state.controls.email.valid}
                   touched={this.state.controls.email.touched}
-                  autoCapitalize="none"
+                  // autoCapitalize="none"
                   autoCompleteType="email"
                   autoCorrect={false}
                   keyboardType="email-address"
