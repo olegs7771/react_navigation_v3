@@ -63,34 +63,6 @@ export class Places extends Component {
         <TextTitle style={{ marginVertical: 10 }}>Choose Place</TextTitle>
       );
     }
-    //Create Animation Appearance of Input Form
-    let addPlaceInputContent;
-    if (!this.state.placeLoaded) {
-      addPlaceInputContent = (
-        <TouchableOpacity
-          onPress={() =>
-            this.setState({
-              placeLoaded: true
-            })
-          }
-        >
-          <View style={styles.containerAddPlaceBtn}>
-            <Text style={styles.textAddPlaceBtn}>Find Places</Text>
-          </View>
-        </TouchableOpacity>
-      );
-    } else {
-      addPlaceInputContent = (
-        <View>
-          <InputForm
-            placeName={this.state.placeName}
-            placeholder="Choose some place.."
-            onChangeText={text => this.setState({ placeName: text })}
-          />
-          <Button title="Add Place" onPress={this._addPlace} />
-        </View>
-      );
-    }
 
     return (
       <ScrollView style={styles.containerScrollView}>
@@ -121,7 +93,14 @@ export class Places extends Component {
                   : styles.containerInputLandScape
               }
             >
-              {addPlaceInputContent}
+              <View>
+                <InputForm
+                  placeName={this.state.placeName}
+                  placeholder="Choose some place.."
+                  onChangeText={text => this.setState({ placeName: text })}
+                />
+                <Button title="Add Place" onPress={this._addPlace} />
+              </View>
             </View>
 
             <View

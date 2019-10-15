@@ -10,11 +10,16 @@ export default class PlacesMap extends Component {
       longitudeDelta:
         (Dimensions.get("window").width / Dimensions.get("window").height) *
         0.0122
-    }
+    },
+    locationChosen: false
   };
   _pickLocation = e => {
     const { coordinate } = e.nativeEvent;
-    console.log("coordinate", coordinate);
+    this.map.animateToRegion({
+      ...this.state.focusedRegion,
+      latitude: coordinate.latitude,
+      longitude: coordinate.longitude
+    });
 
     this.setState(prevState => {
       return {
@@ -22,24 +27,37 @@ export default class PlacesMap extends Component {
           ...prevState.focusedRegion,
           latitude: coordinate.latitude,
           longitude: coordinate.longitude
-        }
+        },
+        locationChosen: true
       };
     });
   };
   render() {
+    let marker;
+    if (this.state.locationChosen) {
+      marker = <MapView.Marker coordinate={this.state.focusedRegion} />;
+    } else {
+      marker = null;
+    }
     return (
       <MapView
         {...this.props}
         initialRegion={this.state.focusedRegion}
-        region={this.state.focusedRegion}
+        // region={this.state.focusedRegion} -> disabled
+        // now we use animation for focused region
         onPress={this._pickLocation}
+        //bind method to this class with ref
+        //we create property to this class ( PlacesMap)
+        ref={ref => (this.map = ref)}
         style={{
           height: 200,
           width: "100%",
           backgroundColor: "#b8bbbf",
           marginBottom: 5
         }}
-      />
+      >
+        {marker}
+      </MapView>
     );
   }
 }

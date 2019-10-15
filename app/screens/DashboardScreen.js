@@ -23,8 +23,6 @@ export default class DashboardScreen extends Component {
   };
 
   render() {
-    console.log("this.props", this.props.navigation.state);
-
     return (
       <View style={styles.container}>
         <View style={styles.containerButton}>
