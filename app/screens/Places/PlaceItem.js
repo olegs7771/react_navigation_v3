@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  Button
+  Button,
+  Animated,
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { selectPlaceID, sharePlace } from "../../../action/modalAction";
@@ -16,7 +18,9 @@ class PlaceItem extends Component {
   state = {
     sharedPlaces: [],
     isShared: false,
-    isMapChoosed: false
+
+    //scroll Animated on showMap:true
+    scrollUp: new Animated.Value(0)
   };
 
   //Update State from Redux Props
@@ -31,6 +35,13 @@ class PlaceItem extends Component {
     this.props.selectPlaceID(this.props.id);
   };
 
+  //showMap
+  _showMap = () => {
+    this.setState({
+      showMap: !this.state.showMap
+    });
+  };
+
   //Share Place
   _sharePlace = () => {
     const { id, name, image, text, navigate } = this.props;
@@ -42,7 +53,6 @@ class PlaceItem extends Component {
       text
     };
 
-    console.log(this.state.sharedPlaces.length);
     if (this.state.sharedPlaces.length > 0) {
       const isExists = this.state.sharedPlaces.find(place => {
         return place.id === id;
@@ -86,9 +96,9 @@ class PlaceItem extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          disabled={this.state.isMapChoosed ? true : false}
+          disabled={this.state.showMap ? true : false}
           style={styles.containerTouchable}
-          onPress={this.state.isMapChoosed ? null : this._onPressSelectID}
+          onPress={this.state.showMap ? null : this._onPressSelectID}
         >
           <Text style={styles.text}>{this.props.name}</Text>
           <Image
@@ -100,16 +110,24 @@ class PlaceItem extends Component {
           </View>
           {mapContent}
           <View style={{ marginBottom: 5 }}>
-            <Button
-              title="Add Location"
-              color="#7595c9"
-              onPress={() =>
-                this.setState({
-                  showMap: !this.state.showMap,
-                  isMapChoosed: true
-                })
-              }
-            />
+            {this.state.showMap ? (
+              <Button
+                title="Hide Map"
+                color="#7595c9"
+                onPress={() =>
+                  this.setState({
+                    showMap: !this.state.showMap,
+                    isMapChoosed: true
+                  })
+                }
+              />
+            ) : (
+              <Button
+                title="Show Map"
+                color="#7595c9"
+                onPress={this._showMap}
+              />
+            )}
           </View>
           <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
           {isSharedContent}

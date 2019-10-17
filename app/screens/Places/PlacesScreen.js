@@ -93,8 +93,9 @@ export class Places extends Component {
                   : styles.containerInputLandScape
               }
             >
-              <View>
+              <View style={{ width: "80%", alignSelf: "center" }}>
                 <InputForm
+                  value={this.state.placeName}
                   placeName={this.state.placeName}
                   placeholder="Choose some place.."
                   onChangeText={text => this.setState({ placeName: text })}

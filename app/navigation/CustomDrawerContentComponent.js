@@ -20,8 +20,6 @@ class CustomDrawerContentComponent extends Component {
   };
 
   render() {
-    console.log("user", this.props.user);
-
     return (
       <ScrollView style={styles.container}>
         <View style={styles.containerIcon}>

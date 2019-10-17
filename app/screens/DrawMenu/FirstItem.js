@@ -5,29 +5,49 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { NavigationEvents } from "react-navigation";
 
 export class FirstItem extends Component {
   render() {
-    const cat = {
-      legs: 4,
-      sound: "meow"
-    };
-    const dog = {
-      ...cat,
-      legs: 5
-    };
-
-    console.log("dog", dog);
-
     return (
-      <View>
-        <Text></Text>
-      </View>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={event => console.log("event", event.type)}>
+            <View style={styles.containerBtn}>
+              <Text style={styles.text}>Some text</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+    paddingTop: 50
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  containerBtn: {
+    backgroundColor: "#1b262b",
+    borderRadius: 5,
+    padding: 5,
+    width: "70%",
+    alignSelf: "center"
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    color: "red"
+  }
+});
 
 export default FirstItem;
