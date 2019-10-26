@@ -66,7 +66,7 @@ export default class PlacesMap extends Component {
       marker = null;
     }
 
-    if (Object.keys(this.state.focusedRegion.length > 3)) {
+    if (this.state.focusedRegion.latitude) {
       return (
         <View style={styles.container}>
           <MapView
@@ -92,6 +92,12 @@ export default class PlacesMap extends Component {
           ) : (
             <Button title="Pick Location On Map" color="#92abd4" />
           )}
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>Loading..</Text>
         </View>
       );
     }
