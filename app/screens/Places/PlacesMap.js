@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, Dimensions, Button } from "react-native";
 
 import MapView from "react-native-maps";
-export default class PlacesMap extends Component {
+import { connect } from "react-redux";
+import { getCurrentLocation } from "../../../action/locationAction";
+
+class PlacesMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,18 +31,6 @@ export default class PlacesMap extends Component {
     });
   }
 
-  // state = {
-  //   focusedRegion: {
-  //     latitude: 32.8315344,
-  //     longitude: 34.9749484,
-  //     latitudeDelta: 0.0122,
-  //     longitudeDelta:
-  //       (Dimensions.get("window").width / Dimensions.get("window").height) *
-  //       0.0122
-  //   },
-  //   locationChosen: false
-  // };
-
   _pickLocation = e => {
     const { coordinate } = e.nativeEvent;
     this.map.animateToRegion({
@@ -57,6 +48,14 @@ export default class PlacesMap extends Component {
         locationChosen: true
       };
     });
+    //Get Location Data to Redux
+    const data = {
+      longitude: this.state.focusedRegion.longitude,
+      latitude: this.state.focusedRegion.latitude,
+      longitudeDelta: this.state.focusedRegion.longitudeDelta,
+      latitudeDelta: this.state.focusedRegion.latitudeDelta
+    };
+    this.props.getCurrentLocation(data);
   };
   render() {
     let marker;
@@ -87,9 +86,7 @@ export default class PlacesMap extends Component {
           >
             {marker}
           </MapView>
-          {this.state.locationChosen ? (
-            <Button title="Confirm Location" color="#92abd4" />
-          ) : (
+          {this.state.locationChosen ? null : (
             <Button title="Pick Location On Map" color="#92abd4" />
           )}
         </View>
@@ -103,6 +100,11 @@ export default class PlacesMap extends Component {
     }
   }
 }
+
+export default connect(
+  null,
+  { getCurrentLocation }
+)(PlacesMap);
 
 const styles = StyleSheet.create({
   container: {

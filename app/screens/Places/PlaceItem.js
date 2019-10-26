@@ -50,7 +50,8 @@ class PlaceItem extends Component {
       id,
       name,
       image,
-      text
+      text,
+      location: this.props.location.location
     };
 
     if (this.state.sharedPlaces.length > 0) {
@@ -137,7 +138,8 @@ class PlaceItem extends Component {
   }
 }
 const mapStateToProps = state => ({
-  sharedPlaces: state.modal.sharedPlaces
+  sharedPlaces: state.modal.sharedPlaces,
+  location: state.location
 });
 
 export default connect(
