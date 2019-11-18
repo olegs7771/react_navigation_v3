@@ -16,6 +16,7 @@ import PlacesMap from "./PlacesMap";
 
 class PlaceItem extends Component {
   state = {
+    showMap: false,
     sharedPlaces: [],
     isShared: false,
     location: {},
@@ -87,6 +88,8 @@ class PlaceItem extends Component {
 
         navigate("SharedPlaces");
       }
+    } else {
+      this.props.sharePlace(newSharedPlace);
     }
   };
 

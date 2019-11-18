@@ -1,15 +1,23 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, Dimensions, Button } from "react-native";
-import { connect } from "react-redux";
-import { addLocation } from "../../../action/modalAction";
 
 import MapView from "react-native-maps";
-
+import { connect } from "react-redux";
 import { getCurrentLocation } from "../../../action/locationAction";
 
 class PlacesMap extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      focusedRegion: {
+        latitudeDelta: 0.0122,
+        longitudeDelta:
+          (Dimensions.get("window").width / Dimensions.get("window").height) *
+          0.0122
+      },
+      locationChosen: false
+    };
+
     navigator.geolocation.getCurrentPosition(geo_success => {
       this.setState(prevState => {
         return {
@@ -21,6 +29,7 @@ class PlacesMap extends Component {
         };
       });
     });
+  }
 
   _pickLocation = e => {
     const { coordinate } = e.nativeEvent;
@@ -47,12 +56,6 @@ class PlacesMap extends Component {
       latitudeDelta: this.state.focusedRegion.latitudeDelta
     };
     this.props.getCurrentLocation(data);
-  };
-
-  _confirmLocation = e => {
-    console.log("this.state.focusedRegion", this.state.focusedRegion);
-    const location = this.state.focusedRegion;
-    this.props.getLocation(location);
   };
 
   render() {
@@ -99,10 +102,7 @@ class PlacesMap extends Component {
   }
 }
 
-export default connect(
-  null,
-  { getCurrentLocation }
-)(PlacesMap);
+export default connect(null, { getCurrentLocation })(PlacesMap);
 
 const styles = StyleSheet.create({
   container: {
@@ -110,5 +110,3 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
-
-export default connect(null, { addLocation })(PlacesMap);
