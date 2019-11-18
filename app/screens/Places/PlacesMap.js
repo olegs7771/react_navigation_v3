@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { addLocation } from "../../../action/modalAction";
 
 import MapView from "react-native-maps";
+import { connect } from "react-redux";
+import { getCurrentLocation } from "../../../action/locationAction";
+
 class PlacesMap extends Component {
   constructor(props) {
     super(props);
@@ -18,17 +21,6 @@ class PlacesMap extends Component {
         };
       });
     });
-
-    this.state = {
-      focusedRegion: {
-        latitudeDelta: 0.0122,
-        longitudeDelta:
-          (Dimensions.get("window").width / Dimensions.get("window").height) *
-          0.0122
-      },
-      locationChosen: false
-    };
-  }
 
   _pickLocation = e => {
     const { coordinate } = e.nativeEvent;
@@ -47,6 +39,14 @@ class PlacesMap extends Component {
         locationChosen: true
       };
     });
+    //Get Location Data to Redux
+    const data = {
+      longitude: this.state.focusedRegion.longitude,
+      latitude: this.state.focusedRegion.latitude,
+      longitudeDelta: this.state.focusedRegion.longitudeDelta,
+      latitudeDelta: this.state.focusedRegion.latitudeDelta
+    };
+    this.props.getCurrentLocation(data);
   };
 
   _confirmLocation = e => {
@@ -63,10 +63,14 @@ class PlacesMap extends Component {
       marker = null;
     }
 
+<<<<<<< HEAD
     if (
       this.state.focusedRegion.longitude &&
       this.state.focusedRegion.latitude
     ) {
+=======
+    if (this.state.focusedRegion.latitude) {
+>>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
       return (
         <View style={styles.container}>
           <MapView
@@ -87,6 +91,7 @@ class PlacesMap extends Component {
           >
             {marker}
           </MapView>
+<<<<<<< HEAD
           {this.state.locationChosen ? (
             <Button
               title="Confirm Location"
@@ -94,6 +99,9 @@ class PlacesMap extends Component {
               onPress={this._confirmLocation}
             />
           ) : (
+=======
+          {this.state.locationChosen ? null : (
+>>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
             <Button title="Pick Location On Map" color="#92abd4" />
           )}
         </View>
@@ -101,12 +109,21 @@ class PlacesMap extends Component {
     } else {
       return (
         <View>
+<<<<<<< HEAD
           <Text>Loading...</Text>
+=======
+          <Text>Loading..</Text>
+>>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
         </View>
       );
     }
   }
 }
+
+export default connect(
+  null,
+  { getCurrentLocation }
+)(PlacesMap);
 
 const styles = StyleSheet.create({
   container: {

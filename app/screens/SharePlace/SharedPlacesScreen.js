@@ -20,6 +20,7 @@ export class SharedPlaces extends Component {
                 name={item.name}
                 image={item.image}
                 text={item.text}
+                location={item.location}
               />
             )}
           />
