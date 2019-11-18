@@ -64,11 +64,7 @@ class PlaceItem extends Component {
       name,
       image,
       text,
-<<<<<<< HEAD
-      location: this.state.location
-=======
       location: this.props.location.location
->>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
     };
 
     if (this.state.sharedPlaces.length > 0) {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addLocation } from "../../../action/modalAction";
 
 import MapView from "react-native-maps";
-import { connect } from "react-redux";
+
 import { getCurrentLocation } from "../../../action/locationAction";
 
 class PlacesMap extends Component {
@@ -63,14 +63,7 @@ class PlacesMap extends Component {
       marker = null;
     }
 
-<<<<<<< HEAD
-    if (
-      this.state.focusedRegion.longitude &&
-      this.state.focusedRegion.latitude
-    ) {
-=======
     if (this.state.focusedRegion.latitude) {
->>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
       return (
         <View style={styles.container}>
           <MapView
@@ -91,17 +84,7 @@ class PlacesMap extends Component {
           >
             {marker}
           </MapView>
-<<<<<<< HEAD
-          {this.state.locationChosen ? (
-            <Button
-              title="Confirm Location"
-              color="#92abd4"
-              onPress={this._confirmLocation}
-            />
-          ) : (
-=======
           {this.state.locationChosen ? null : (
->>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
             <Button title="Pick Location On Map" color="#92abd4" />
           )}
         </View>
@@ -109,11 +92,7 @@ class PlacesMap extends Component {
     } else {
       return (
         <View>
-<<<<<<< HEAD
-          <Text>Loading...</Text>
-=======
           <Text>Loading..</Text>
->>>>>>> 48ded3ef8fa20c41c2ef077ddc4da3eec11dfc34
         </View>
       );
     }
