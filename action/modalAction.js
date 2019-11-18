@@ -1,5 +1,6 @@
 import {
   ADD_PLACE,
+  ADD_LOCATION,
   SELECT_PLACE,
   DELETE_PLACE,
   DELETE_SHARED_PLACE,
@@ -35,6 +36,8 @@ export const closePlace = () => {
   };
 };
 export const sharePlace = placeToShare => {
+  console.log("in action placeToShare", placeToShare);
+
   return {
     type: SHARE_PLACE,
     payload: placeToShare

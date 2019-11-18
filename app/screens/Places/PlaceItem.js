@@ -18,6 +18,7 @@ class PlaceItem extends Component {
   state = {
     sharedPlaces: [],
     isShared: false,
+    location: {},
 
     //scroll Animated on showMap:true
     scrollUp: new Animated.Value(0)
@@ -41,16 +42,29 @@ class PlaceItem extends Component {
       showMap: !this.state.showMap
     });
   };
+  //If user picked location then we add it to sharedPlace
+  _addLocation = location => {
+    console.log("location in placeitem", location);
+
+    this.setState({
+      location
+    });
+  };
 
   //Share Place
+
   _sharePlace = () => {
+    console.log("pressed on share");
+
     const { id, name, image, text, navigate } = this.props;
+
     const newSharedPlace = {
       key: JSON.stringify(Math.random()),
       id,
       name,
       image,
-      text
+      text,
+      location: this.state.location
     };
 
     if (this.state.sharedPlaces.length > 0) {
@@ -70,17 +84,15 @@ class PlaceItem extends Component {
         return;
       } else {
         this.props.sharePlace(newSharedPlace);
+
         navigate("SharedPlaces");
       }
-    } else {
-      this.props.sharePlace(newSharedPlace);
-      navigate("SharedPlaces");
     }
   };
 
   render() {
     //Show Message
-    let isSharedContent;
+    let isSharedMessageContent;
     if (this.state.isShared) {
       isSharedContent = <Text style={styles.textMessage}>Already Shared</Text>;
     } else {
@@ -89,7 +101,7 @@ class PlaceItem extends Component {
     //Show Map
     let mapContent;
     if (this.state.showMap) {
-      mapContent = <PlacesMap />;
+      mapContent = <PlacesMap getLocation={this._addLocation} />;
     } else {
       mapContent = null;
     }
@@ -130,7 +142,7 @@ class PlaceItem extends Component {
             )}
           </View>
           <Button title="Share" color="#42e6f5" onPress={this._sharePlace} />
-          {isSharedContent}
+          {isSharedMessageContent}
         </TouchableOpacity>
       </View>
     );
@@ -140,10 +152,9 @@ const mapStateToProps = state => ({
   sharedPlaces: state.modal.sharedPlaces
 });
 
-export default connect(
-  mapStateToProps,
-  { selectPlaceID, sharePlace }
-)(PlaceItem);
+export default connect(mapStateToProps, { selectPlaceID, sharePlace })(
+  PlaceItem
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -18,6 +18,7 @@ export default function(state = initialState, action) {
         ...state,
         places: state.places.concat(action.payload)
       };
+
     case SELECT_PLACE:
       return {
         ...state,

@@ -132,10 +132,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { addPlace };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Places);
+export default connect(mapStateToProps, mapDispatchToProps)(Places);
 
 const styles = StyleSheet.create({
   containerScrollView: { flex: 1 },

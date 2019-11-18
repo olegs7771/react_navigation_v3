@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, Dimensions, Button } from "react-native";
+import { connect } from "react-redux";
+import { addLocation } from "../../../action/modalAction";
 
 import MapView from "react-native-maps";
-export default class PlacesMap extends Component {
+class PlacesMap extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      focusedRegion: {
-        latitudeDelta: 0.0122,
-        longitudeDelta:
-          (Dimensions.get("window").width / Dimensions.get("window").height) *
-          0.0122
-      },
-      locationChosen: false
-    };
-
     navigator.geolocation.getCurrentPosition(geo_success => {
       this.setState(prevState => {
         return {
@@ -26,19 +18,17 @@ export default class PlacesMap extends Component {
         };
       });
     });
-  }
 
-  // state = {
-  //   focusedRegion: {
-  //     latitude: 32.8315344,
-  //     longitude: 34.9749484,
-  //     latitudeDelta: 0.0122,
-  //     longitudeDelta:
-  //       (Dimensions.get("window").width / Dimensions.get("window").height) *
-  //       0.0122
-  //   },
-  //   locationChosen: false
-  // };
+    this.state = {
+      focusedRegion: {
+        latitudeDelta: 0.0122,
+        longitudeDelta:
+          (Dimensions.get("window").width / Dimensions.get("window").height) *
+          0.0122
+      },
+      locationChosen: false
+    };
+  }
 
   _pickLocation = e => {
     const { coordinate } = e.nativeEvent;
@@ -58,6 +48,13 @@ export default class PlacesMap extends Component {
       };
     });
   };
+
+  _confirmLocation = e => {
+    console.log("this.state.focusedRegion", this.state.focusedRegion);
+    const location = this.state.focusedRegion;
+    this.props.getLocation(location);
+  };
+
   render() {
     let marker;
     if (this.state.locationChosen) {
@@ -66,7 +63,10 @@ export default class PlacesMap extends Component {
       marker = null;
     }
 
-    if (Object.keys(this.state.focusedRegion.length > 3)) {
+    if (
+      this.state.focusedRegion.longitude &&
+      this.state.focusedRegion.latitude
+    ) {
       return (
         <View style={styles.container}>
           <MapView
@@ -88,10 +88,20 @@ export default class PlacesMap extends Component {
             {marker}
           </MapView>
           {this.state.locationChosen ? (
-            <Button title="Confirm Location" color="#92abd4" />
+            <Button
+              title="Confirm Location"
+              color="#92abd4"
+              onPress={this._confirmLocation}
+            />
           ) : (
             <Button title="Pick Location On Map" color="#92abd4" />
           )}
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>Loading...</Text>
         </View>
       );
     }
@@ -104,3 +114,5 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+
+export default connect(null, { addLocation })(PlacesMap);
