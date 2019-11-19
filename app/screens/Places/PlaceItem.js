@@ -90,6 +90,7 @@ class PlaceItem extends Component {
       }
     } else {
       this.props.sharePlace(newSharedPlace);
+      navigate("SharedPlaces");
     }
   };
 
